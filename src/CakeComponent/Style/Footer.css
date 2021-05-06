@@ -1,0 +1,17 @@
+.footer {
+    padding: 10px;
+    border-left: 2px double black;
+    border-right: 2px double black;
+    border-bottom: 2px double black;
+}
+.footer p {
+    margin: 1px;
+    font-weight: 600;
+}
+.footer i {
+    font-size: 50px;
+    padding: 20px;
+}
+.fa-instagram {
+    margin-right: 25px;
+}

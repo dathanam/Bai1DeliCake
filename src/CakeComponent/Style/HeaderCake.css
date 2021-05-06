@@ -1,0 +1,27 @@
+body {
+    font-family: Cursive;
+}
+.navbar a img {
+    height: 80px;
+    width: 80px;
+    border-radius: 100px;
+    margin-right: 100px;
+}
+.navbar-nav {
+    font-size: 20px;
+    color: black;
+    font-weight: bold;
+}
+
+.navbar li {
+    padding-left: 60px;
+}
+.navbar {
+    background-color: white;
+    border-left: 2px double black;
+    border-right: 2px double black;
+    border-top: 2px double black;
+}
+.navbar-nav :hover {
+    text-decoration: underline;
+}

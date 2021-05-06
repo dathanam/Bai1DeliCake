@@ -1,0 +1,15 @@
+.list-order {
+    border: 2px double black;
+}
+.abc i {
+    font-size: 25px;
+    margin-left: 20px;
+}
+
+.id {
+    text-decoration-line: underline;
+    color: blue;
+}
+.list-order input {
+    width: 150px;
+}

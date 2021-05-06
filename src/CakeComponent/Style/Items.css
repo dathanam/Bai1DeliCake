@@ -1,0 +1,30 @@
+.itemss {
+    border: 2px double black;
+}
+.col-3 {
+    border-right: 2px double black;
+}
+ul li {
+    list-style: none;
+}
+.ul1 li:hover {
+    font-weight: bold;
+}
+.abc {
+    font-weight: bold;
+}
+.abc button:hover {
+    text-decoration: underline;
+    font-weight: bold;
+}
+.abc button {
+    font-weight: bold;
+    border: none;
+}
+.xyz button {
+    border: none;
+    font-size: 15px;
+}
+.xyz button:hover {
+    text-decoration: underline;
+}
