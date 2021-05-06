@@ -1,14 +1,10 @@
 import React from 'react';
 import { Container } from 'reactstrap';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
-
 import Header from './CakeComponent/HeaderCake';
-import List_Order from './CakeComponent/List_Order';
+import ListOrder from './CakeComponent/ListOrder';
 import Footer from './CakeComponent/Footer';
 import Item from './CakeComponent/Item';
-
-
 
 function App() {
   return (
@@ -16,7 +12,7 @@ function App() {
       <Container>
         <Header />
         <Switch>
-          <Route path="/" component={List_Order} />
+          <Route path="/" component={ListOrder} />
           <Route path="/items" component={Item} />
         </Switch>
         <Footer />
