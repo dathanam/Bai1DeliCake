@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Container } from 'reactstrap';
 import './Style/Items.css'
-import { BrowserRouter as Link } from "react-router-dom";
 import { axios } from '../component/axios'
 import AllItem from '../CakeComponent/AllItems'
 
 function Item() {
 
-    const [listCatarogy, setlistCatarogy] = useState([]);
+    const [listCategory, setListCategory] = useState([]);
 
     const getArr = async () => {
         const response = await axios
@@ -15,16 +14,18 @@ function Item() {
             .catch((err) => console.log("Error: ", err));
 
         if (response && response.data) {
-            setlistCatarogy(response.data.data)
+            setListCategory(response.data.data)
         }
     }
     useEffect(() => {
         getArr();
     }, []);
 
+    console.log(listCategory)
+
     const [name, setName] = useState({
-        cate: "",
-        sub: ""
+        idcate: "",
+        idsub: ""
     });
 
     return (
@@ -34,14 +35,14 @@ function Item() {
                     <div className="row">
                         <div className="col-3">
                             {
-                                listCatarogy.map((item) => {
+                                listCategory.map((item) => {
                                     return (
                                         <ul className="danhmuc">
                                             <li className="li1">
                                                 <div className="abc">
                                                     <button
                                                         onClick={() => setName({
-                                                            cate: item.name
+                                                            idcate: item.id
                                                         })}>
                                                         {item.name}
                                                     </button>
@@ -52,11 +53,10 @@ function Item() {
                                                             return (
                                                                 <button
                                                                     onClick={() => setName({
-                                                                        cate: item.name,
-                                                                        sub: icon.sub_name
+                                                                        idsub: icon.id
                                                                     })
                                                                     }
-                                                                >{icon.sub_name}</button>
+                                                                >{icon.name}</button>
                                                             )
                                                         })
                                                     }

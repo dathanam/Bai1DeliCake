@@ -28,3 +28,72 @@ ul li {
 .xyz button:hover {
     text-decoration: underline;
 }
+.modal {
+    text-align: center;
+}
+.modal input {
+    text-align: center;
+    width: 150px;
+    margin: auto;
+}
+.modal Button {
+    background-color: white;
+    color: red;
+    border: 2px solid #4caf50;
+    font-size: 15px;
+    width: 130px;
+    margin: auto;
+}
+.modal select {
+    border-radius: 20px;
+    margin-top: 10px;
+    background-color: powderblue;
+}
+
+.btnAddSub {
+    display: inline-block;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: rgb(231, 158, 170);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px #999;
+}
+.btnAddSub:hover {
+    background-color: rgb(236, 129, 147);
+}
+
+.btnAddSub:active {
+    background-color: rgb(243, 51, 83);
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+.btnAddSub1 {
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: rgb(231, 158, 170);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px #999;
+}
+.btnAddSub1:hover {
+    background-color: rgb(194, 171, 175);
+}
+
+.btnAddSub1:active {
+    background-color: rgb(134, 122, 124);
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+.btnModalCake {
+    width: 1000px;
+}

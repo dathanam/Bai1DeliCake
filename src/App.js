@@ -5,6 +5,7 @@ import Header from './CakeComponent/HeaderCake';
 import ListOrder from './CakeComponent/ListOrder';
 import Footer from './CakeComponent/Footer';
 import Item from './CakeComponent/Item';
+import prop from './CakeComponent/PopUp';
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
       <Container>
         <Header />
         <Switch>
-          <Route path="/" component={ListOrder} />
+          <Route path="/" component={Item} />
           <Route path="/items" component={Item} />
         </Switch>
         <Footer />
