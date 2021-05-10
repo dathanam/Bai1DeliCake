@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { axios } from '../component/axios'
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import Axios from 'axios';
 import { useHistory } from "react-router-dom";
 
@@ -10,28 +10,24 @@ function AllItems(props) {
     const checkbutton = () => {
         setCheck(false)
     }
-
-    console.log("gggg", props.name.idcate)
-    let url = "api/v1/items";
-
-    // if (!props.name.idcate) {
-    //     url = "api/v1/items";
-    // }
-    // else {
-    //     if (!props.name.sub) {
-    //         url = `api/v1/items/cate/${props.name.cate}`;
-    //     }
-    //     else {
-    //         url = `api/v1/items/sub?cate=${props.name.cate}&sub=${props.name.sub}`;
-    //     }
-    // }
+    let url = "";
+    if (!props.name.idcate && !props.name.idsub) {
+        url = "api/v1/items";
+    }
+    else {
+        if (!props.name.idsub) {
+            url = `api/v1/items/cate/${props.name.idcate}`;
+        }
+        else {
+            url = `api/v1/items/sub/${props.name.idsub}`;
+        }
+    }
     const getArr = async () => {
         const response = await axios
             .get(url)
             .catch((err) => console.log("Error: ", err));
 
         if (response && response.data) {
-            console.log(response.data.data)
             setlistCategoriesDetail(response.data.data);
         }
     }
@@ -51,6 +47,11 @@ function AllItems(props) {
     } = props;
     const [modalCake, setModalCake] = useState(false);
     const toggleAddCake = () => setModalCake(!modalCake);
+
+    const history = useHistory();
+    function EditItem(id) {
+        history.push("/edititem/" + id)
+    }
 
     let showbutton = () => {
         if (check) {
@@ -85,7 +86,7 @@ function AllItems(props) {
         name: "",
         category_name: ""
     })
-    const history = useHistory();
+
     function submit(e) {
         e.preventDefault();
         Axios.post(urlCreateSubCategories, {
@@ -106,6 +107,12 @@ function AllItems(props) {
         setData(newdata);
     }
 
+    const [dataEdit, setDataEdit] = useState({
+        name: "",
+        price: "",
+        category: "",
+        subCategory: ""
+    })
     return (
         <div className="col-9">
             <br />
@@ -137,18 +144,26 @@ function AllItems(props) {
                                     </td>
                                     <td>{item.name}</td>
                                     <td>$ {item.price}</td>
-                                    {
-                                        item.category.map((icon) => {
-                                            return (<td>{icon.name}</td>)
-                                        })
-                                    }
-                                    {
-                                        item.subcategory.map((icon) => {
-                                            return (<td>{icon.name}</td>)
-                                        })
-                                    }
+                                    <td>$ {item.category.name}</td>
+                                    <td>$ {item.subcategory.name}</td>
                                     <td className="abc">
-                                        <i class="fas fa-pen"></i>
+                                        {/* <button
+                                            onClick={() => EditItem(item.id)
+                                            }> <i className="fas fa-edit"></i>
+                                        </button> */}
+                                        <button
+                                            onClick={() => {
+                                                const res = Axios
+                                                    .get(`http://192.168.1.250:5012/api/v1/items/` + item.id)
+                                                    .catch((err) => console.log("Error: ", err));
+                                                if (res && res.data) {
+                                                    console.log("ggg", res.data)
+                                                    //   setDataEdit(response.data.data);
+                                                }
+                                                console.log("fff")
+                                            }
+                                            }> <i className="fas fa-edit"></i>
+                                        </button>
                                         <i class="far fa-trash-alt"></i>
                                     </td>
                                 </tr>
@@ -196,7 +211,7 @@ function AllItems(props) {
             </Modal>
 
 
-        </div>
+        </div >
     );
 }
 

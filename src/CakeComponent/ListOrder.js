@@ -1,39 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { axios } from '../component/axios'
 import { Container } from 'reactstrap';
 import './Style/ListOrder.css';
 
-let ListOrder = [
-    {
-        "id": "123456",
-        "total": "504",
-        "status": "Completed",
-        "phoneNumber": "0123456789",
-        "address": "52 le Dai Hanh St, Hai Ba Trung Dist"
-    },
-    {
-        "id": "123456",
-        "total": "504",
-        "status": "Completed",
-        "phoneNumber": "0123456789",
-        "address": "210 Hoang Quoc Viet Ha Noi"
-    },
-    {
-        "id": "123456",
-        "total": "504",
-        "status": "Completed",
-        "phoneNumber": "0123456789",
-        "address": "112 Trung Kinh Tu Liem"
-    },
-    {
-        "id": "123456",
-        "total": "504",
-        "status": "Completed",
-        "phoneNumber": "0123456789",
-        "address": "22 Hoang Hoa Tham Cau Giay"
-    }
-]
-
 function List_Order() {
+
+    const [listOrder, setListOrder] = useState([]);
+
+    const getArr = async () => {
+        const response = await axios
+            .get("/api/v1/orders")
+            .catch((err) => console.log("Error: ", err));
+
+        if (response && response.data) {
+            setListOrder(response.data.data)
+        }
+    }
+    useEffect(() => {
+        getArr();
+    }, []);
+
     return (
         <div className="list-order">
             <Container>
@@ -71,7 +57,7 @@ function List_Order() {
                     </thead>
                     <tbody>
                         {
-                            ListOrder.map((item) => {
+                            listOrder.map((item) => {
                                 return (
                                     <tr>
                                         <td className="id">{item.id}</td>
