@@ -21,8 +21,6 @@ function Item() {
         getArr();
     }, []);
 
-    console.log(listCategory)
-
     const [name, setName] = useState({
         idcate: "",
         idsub: ""
@@ -68,7 +66,7 @@ function Item() {
                             }
                         </div>
 
-                        <AllItem name={name} />
+                        <AllItem name={name} listCategory={listCategory} />
                     </div>
                 </Container>
             </div>

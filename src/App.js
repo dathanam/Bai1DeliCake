@@ -5,7 +5,9 @@ import Header from './CakeComponent/HeaderCake';
 import ListOrder from './CakeComponent/ListOrder';
 import Footer from './CakeComponent/Footer';
 import Item from './CakeComponent/Item';
-import EditItems from './CakeComponent/EditItems'
+import EditItems from './CakeComponent/EditItems';
+import Recipes from './CakeComponent/Recipes';
+import NewRecipe from './CakeComponent/NewRecipe';
 
 function App() {
   return (
@@ -35,6 +37,8 @@ function App() {
             <Route path="/" exact component={ListOrder} />
             <Route path="/items" component={Item} />
             <Route path="/edititem/:id" component={EditItems} />
+            <Route path="/recipes" component={Recipes} />
+            <Route path="/newrecipe" component={NewRecipe} />
           </Switch>
           <Footer />
         </Container>
