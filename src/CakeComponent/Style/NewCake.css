@@ -1,0 +1,87 @@
+.newCake {
+    border: 2px double black;
+}
+
+.rowCake {
+    padding: 50px;
+}
+.col-7 {
+    border: 2px double black;
+}
+.abc img {
+    margin: 10px;
+    width: 100px;
+    border: 2px double black;
+}
+.abc {
+    border-top: 2px double black;
+    margin-top: 30px;
+}
+.imgdetail {
+    border: none;
+}
+.avata img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+    margin-top: 20px;
+}
+.cakeBody {
+    padding: 0px 50px;
+}
+.textCake {
+    width: 300px;
+    height: 200px;
+}
+.btnCake {
+    text-align: center;
+}
+.btnAddCakeSave {
+    display: inline-block;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: rgb(240, 106, 128);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px #999;
+    width: 100px;
+    margin: 10px;
+}
+.btnAddCakeSave:hover {
+    background-color: rgb(238, 44, 77);
+}
+
+.btnAddCakeSave:active {
+    background-color: rgb(243, 51, 83);
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+.btnAddCakeCancel {
+    display: inline-block;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: rgb(138, 117, 231);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px #999;
+    width: 100px;
+    margin: 10px;
+}
+.btnAddCakeCancel:hover {
+    background-color: rgba(243, 67, 97, 0.315);
+}
+
+.btnAddCakeCancel:active {
+    background-color: rgb(243, 51, 83);
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}

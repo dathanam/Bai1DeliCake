@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { axios } from '../component/axios'
 import { Container } from 'reactstrap';
 import './Style/ListOrder.css';
+import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
-function List_Order() {
+function List_Order(props) {
 
     const [listOrder, setListOrder] = useState([]);
-
+    const [orderDetail, setOrderDetail] = useState([]);
     const getArr = async () => {
         const response = await axios
             .get("/api/v1/orders")
@@ -20,17 +21,74 @@ function List_Order() {
         getArr();
     }, []);
 
+    const [id, setID] = useState({
+        id: ""
+    });
+    const getOrderDetail = async () => {
+        const response = await axios
+            .get(`/api/v1/orders/` + id.id)
+            .catch((err) => console.log("Error: ", err));
+
+        if (response && response.data) {
+            setOrderDetail(response.data.data)
+        }
+    }
+    useEffect(() => {
+        getOrderDetail();
+    }, [id.id]);
+
+    function checkInvoice(status, id) {
+        if (status === "completed" || status === "cancelled") {
+            return (
+                <div className="checked">
+                    <button disabled="disabled" type="button" className="btnChecked">Make Invoice</button>
+                    <button className="deleteChecked">
+                        <i class="far fa-trash-alt"></i>
+                    </button>
+                </div>
+            )
+        }
+        else {
+            return (
+                <div className="checking">
+                    <button type="button" className="makeInvoice"
+                        onClick={() => {
+                            setID({
+                                "id": id
+                            })
+                            toggleMakeInvoice();
+                        }
+                        }
+                    >Make Invoice</button>
+                    <button disabled="disabled">
+                        <i class="far fa-trash-alt"></i>
+                    </button>
+                </div>
+            )
+        }
+    }
+    const {
+        modalDetail
+    } = props;
+    const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
+
+    const {
+        modalMake
+    } = props;
+    const [modalMakeInvoice, setModalMakeInvoice] = useState(false);
+    const toggleMakeInvoice = () => setModalMakeInvoice(!modalMakeInvoice);
+
     return (
         <div className="list-order">
             <Container>
                 <br />
                 <div className="row">
                     <div className="col-md-3">
-                        <select>
-                            <option>Status</option>
-                            <option>Completed</option>
-                            <option>Pending</option>
-                            <option>Confirmed</option>
+                        <select className="status">
+                            <option value="completed">Completed</option>
+                            <option value="pending" selected>Pending</option>
+                            <option value="confirmed">Confirmed</option>
                         </select>
                     </div>
                     <div className="col-md-3"></div>
@@ -47,6 +105,7 @@ function List_Order() {
                 <table class="table table-bordered">
                     <thead>
                         <tr>
+                            <th></th>
                             <th>ID</th>
                             <th>Total</th>
                             <th>Status</th>
@@ -60,8 +119,19 @@ function List_Order() {
                             listOrder.map((item) => {
                                 return (
                                     <tr>
-                                        <td className="id">{item.id}</td>
+                                        <td className="id">
+                                            <button className="btnID" onClick={() => {
+                                                setID({
+                                                    "id": item.id
+                                                })
+                                                toggle();
+                                            }
+                                            }>
+                                                <i class="far fa-eye"></i>
+                                            </button></td>
+                                        <td>{item.id}</td>
                                         <td>$ {item.total}</td>
+                                        <td>{item.user.phone_number}</td>
                                         <td>
                                             <select>
                                                 <option>Completed</option>
@@ -69,11 +139,12 @@ function List_Order() {
                                                 <option>Confirmed</option>
                                             </select>
                                         </td>
-                                        <td>{item.status}</td>
-                                        <td>{item.phoneNumber}</td>
-                                        <td className="abc">
-                                            <button>Make Invoice</button>
-                                            <i class="far fa-trash-alt"></i>
+                                        <td>{item.user.phone_number}</td>
+                                        <td>{item.user.address}</td>
+                                        <td>
+                                            {
+                                                checkInvoice(item.status, item.id)
+                                            }
                                         </td>
                                     </tr>
                                 )
@@ -82,6 +153,115 @@ function List_Order() {
                     </tbody>
                 </table>
             </Container>
+
+            <Modal isOpen={modal} toggle={toggle} className={modalDetail}>
+                <ModalHeader toggle={toggle} charCode="X"></ModalHeader>
+                <ModalBody>
+                    <div className="row">
+                        <div className="col-12">
+                            {
+                                orderDetail.map((item) => {
+                                    return (
+                                        <div>
+                                            <h5>Code: {item.id}</h5>
+                                            <h5>Name: {item.user.username}</h5>
+                                            <h5>Address: {item.user.address}</h5>
+                                            <h5>Phone Number: {item.user.phone_number}</h5>
+                                            <h5>Email: {item.user.email}</h5>
+                                            <table>
+                                                <tr>
+                                                    <th>Description</th>
+                                                    <th>Amount</th>
+                                                    <th>Price</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                                {
+                                                    item.items.map((icon) => {
+                                                        return (
+                                                            <>
+                                                                <tr>
+                                                                    <td>{icon.description}</td>
+                                                                    <td>{icon.amount}</td>
+                                                                    <td>{icon.price}</td>
+                                                                    <td>{icon.total}</td>
+                                                                </tr>
+                                                            </>
+                                                        )
+                                                    })
+                                                }
+
+                                            </table>
+                                            <br />
+                                            <h5>Voucher: {item.voucher}</h5>
+                                            <h5>Tax: {item.tax}</h5>
+                                            <h5>Total: ${item.total}</h5>
+                                        </div>
+                                    )
+                                })
+                            }
+
+                        </div>
+                    </div>
+                    <br />
+                    <button type="button" onClick={toggle} className="btnAddSub1">Cancel</button>
+                </ModalBody>
+            </Modal>
+
+            <Modal isOpen={modalMakeInvoice} toggle={toggleMakeInvoice} className={modalMake}>
+                <ModalHeader toggle={toggleMakeInvoice} charCode="X"></ModalHeader>
+                <ModalBody>
+                    <div className="row">
+                        <div className="col-12">
+                            {
+                                orderDetail.map((item) => {
+                                    return (
+                                        <div>
+                                            <h5>Code: {item.id}</h5>
+                                            <h5>Name: {item.user.username}</h5>
+                                            <h5>Address: {item.user.address}</h5>
+                                            <h5>Phone Number: {item.user.phone_number}</h5>
+                                            <h5>Email: {item.user.email}</h5>
+                                            <h5>Date: {item.created_date}</h5>
+                                            <table>
+                                                <tr>
+                                                    <th>Description</th>
+                                                    <th>Amount</th>
+                                                    <th>Price</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                                {
+                                                    item.items.map((icon) => {
+                                                        return (
+                                                            <>
+                                                                <tr>
+                                                                    <td>{icon.description}</td>
+                                                                    <td>{icon.amount}</td>
+                                                                    <td>{icon.price}</td>
+                                                                    <td>{icon.total}</td>
+                                                                </tr>
+                                                            </>
+                                                        )
+                                                    })
+                                                }
+
+                                            </table>
+                                            <br />
+                                            <h5>Voucher: {item.voucher}</h5>
+                                            <h5>Tax: {item.tax}</h5>
+                                            <h5>Total: ${item.total}</h5>
+                                        </div>
+                                    )
+                                })
+                            }
+
+                        </div>
+                    </div>
+                    <br />
+                    <button type="button" onClick={toggleMakeInvoice} className="btnAddSub1">Cancel</button>
+                    <button className="btnAddSub1">Save</button>
+                </ModalBody>
+            </Modal>
+
         </div>
     );
 }

@@ -165,12 +165,14 @@ function AllItems(props) {
         setDataEdit(newdata);
     }
 
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [objectURL, setObjectURL] = useState();
+    const [objectURL, setObjectURL] = useState({
+        url: "",
+        post: ""
+    });
+    console.log(objectURL)
     useEffect(() => {
-        if (!selectedFile) return;
-        setObjectURL(URL.createObjectURL(selectedFile))
-    }, [selectedFile])
+        if (!objectURL.url) return;
+    }, [objectURL.post])
 
     // const deleteItemById = () => {
     //     let ArrItemDelete = [];
@@ -281,9 +283,12 @@ function AllItems(props) {
                             <form onSubmit={(e) => submit(e)}>
                                 <div>
                                     <h3>Select photo</h3>
-                                    <img className="imageCake" src={objectURL} alt="Cake" width="150" height="150" />
+                                    <img className="imageCakeRecipes" src={objectURL.url} alt="Cake" width="150" height="150" />
                                     <br />
-                                    <input type="file" className="custom" onChange={(e) => setSelectedFile(e.target.files[0])}></input>
+                                    <input type="file" className="custom" onChange={(e) => setObjectURL({
+                                        post: e.target.files[0],
+                                        url: URL.createObjectURL(e.target.files[0])
+                                    })}></input>
                                 </div>
                                 <br />
                                 <button type="button" className="btnAddSub">Save</button>

@@ -8,6 +8,7 @@ import Item from './CakeComponent/Item';
 import EditItems from './CakeComponent/EditItems';
 import Recipes from './CakeComponent/Recipes';
 import NewRecipe from './CakeComponent/NewRecipe';
+import NewCake from './CakeComponent/NewCake'
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
             <Route path="/edititem/:id" component={EditItems} />
             <Route path="/recipes" component={Recipes} />
             <Route path="/newrecipe" component={NewRecipe} />
+            <Route path="/newcake" component={NewCake} />
           </Switch>
           <Footer />
         </Container>

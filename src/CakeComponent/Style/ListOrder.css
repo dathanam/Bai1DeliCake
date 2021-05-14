@@ -1,9 +1,33 @@
 .list-order {
     border: 2px double black;
 }
-.abc i {
-    font-size: 25px;
+.list-order i {
+    font-size: 20px;
     margin-left: 20px;
+}
+.makeInvoice {
+    display: inline-block;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: rgb(218, 137, 211);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px #999;
+    margin-right: 5px;
+    width: 150px;
+}
+.makeInvoice:hover {
+    background-color: rgb(236, 129, 147);
+}
+
+.makeInvoice:active {
+    background-color: rgb(243, 51, 83);
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
 }
 
 .id {
@@ -12,4 +36,55 @@
 }
 .list-order input {
     width: 150px;
+}
+.makeInvoice button:hover {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.checked button {
+    border: none;
+}
+.checking button {
+    border: none;
+}
+.id button {
+    border: none;
+}
+.deleteChecked:active {
+    transform: translateY(4px);
+}
+.btnChecked {
+    display: inline-block;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: rgb(158, 126, 155);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px #999;
+    margin-right: 5px;
+    width: 150px;
+}
+.id i {
+    font-size: 15px;
+}
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td,
+th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
 }

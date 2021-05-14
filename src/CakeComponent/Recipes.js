@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './Style/Recipes.css'
 import { axios } from '../component/axios'
+import { BrowserRouter as Link } from "react-router-dom";
 
-function Recipes(props) {
+function Recipes() {
     const [listRecipes, setListRecipes] = useState([]);
-    console.log("listRecipes", listRecipes)
+    const [inputName, setInputName] = useState({
+        nameSearch: ""
+    })
     const getRecipes = async () => {
         const response = await axios
             .get("api/v1/recipes")
@@ -33,13 +36,36 @@ function Recipes(props) {
         getCategory();
     }, []);
 
+    // Search
+    const getSearch = async () => {
+        const response = await axios
+            .get(`api/v1/recipes/` + inputName.nameSearch)
+            .catch((err) => console.log("Error: ", err));
+        if (response && response.data) {
+            setListRecipes(response.data.data);
+        }
+    }
+    useEffect(() => {
+        getSearch();
+    }, [inputName.nameSearch])
+
+    function Search(e) {
+        const newdata = { ...inputName };
+        newdata[e.target.id] = e.target.value;
+        setInputName(newdata);
+    }
+
+    function submitSearchName() {
+        getSearch();
+    }
+
     return (
         <div className="recipes">
             <div className="borderRecipes">
                 <div className="row">
                     <div className="col-md-3">
-                        <form >
-                            <input type="text" placeholder="ID/Name" />
+                        <form onSubmit={(e) => submitSearchName(e)}>
+                            <input onChange={(e) => Search(e)} id="nameSearch" type="text" placeholder="ID/Name" />
                             <button>search</button>
                         </form>
                     </div>
@@ -54,8 +80,7 @@ function Recipes(props) {
                     </div>
                     <div className="col-md-3">
                         <button className="btnAddSub"
-
-                        >Add New Recipes</button>
+                        > <Link to="/newrecipe" className="nav-link">Add New Recipes</Link></button>
                     </div>
                 </div>
                 <br />
