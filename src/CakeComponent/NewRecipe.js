@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Style/NewRecipe.css'
 import { axios } from '../component/axios'
+import Axios from 'axios'
+import { useHistory } from "react-router-dom";
 
 function NewRecipe() {
     const [objectURL, setObjectURL] = useState({
@@ -37,6 +39,7 @@ function NewRecipe() {
         publish_at: "",
         subcategory_id: ""
     })
+    const history = useHistory();
     function CreateRecipe(e) {
         e.preventDefault();
         Axios.post(urlCreateRecipe, {
@@ -64,7 +67,7 @@ function NewRecipe() {
                         </div>
                         <div className="col-6">
                             <h3>Public at</h3>
-                            <input type="date" id="publish_at" value={dataCreateSubCategories.publish_at}></input>
+                            <input type="date"></input>
                         </div>
                     </div>
                     <br />
@@ -74,7 +77,7 @@ function NewRecipe() {
                             post: e.target.files[0],
                             url: URL.createObjectURL(e.target.files[0])
                         })}
-                            id="image" value={dataCreateSubCategories.image}
+                            id="image" 
                         ></input>
                         <img className="imageCakeRecipes" src={objectURL.url} alt="Cake" width="150" height="150" />
 
@@ -84,7 +87,7 @@ function NewRecipe() {
                         <h3>Recipe Name</h3>
                         <div className="row">
                             <div className="col-10">
-                                <input type="text" className="nameNewRecipe" id="name" value={dataCreateSubCategories.name}></input>
+                                <input type="text" className="nameNewRecipe" id="name" ></input>
                             </div>
                             <div className="col-2">
                                 <select>
@@ -101,13 +104,13 @@ function NewRecipe() {
                     <br />
                     <div>
                         <h3>InGredients</h3>
-                        <textarea className="form-control" id="ingredient" value={dataCreateSubCategories.ingredient}></textarea>
+                        <textarea className="form-control" id="ingredient" ></textarea>
 
                     </div>
                     <br />
                     <div>
                         <h3>Directions</h3>
-                        <textarea className="form-control" id="direction" value={dataCreateSubCategories.direction}></textarea>
+                        <textarea className="form-control" id="direction" ></textarea>
 
                     </div>
                     <br />

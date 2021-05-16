@@ -1,0 +1,35 @@
+.headerUser nav ul li{
+    display: flex;
+	align-items: center;
+    justify-content: center;
+}
+.headerUser nav ul li a{
+    color: black;
+}
+.UserSearchCake{
+    margin-left: 50px;
+}
+.UserSearchCake input{
+    width: 100px;
+    border-radius: 10px;
+}
+.UserSearchCake button{
+    border: none;
+}
+.userCart{
+    margin-left: 20px;
+}
+.numberNav{
+    color: red;
+    font-weight: bold;
+}
+.dropdown-menu{
+    width: 700px;
+    font-weight: bold;
+}
+.categoryBody{
+    font-weight: normal;
+}
+.UserSub{
+    margin-left: 20px;
+}

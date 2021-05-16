@@ -4,7 +4,7 @@
 .col-3 {
     border-right: 2px double black;
 }
-ul li {
+.itemss ul li {
     list-style: none;
 }
 .ul1 li:hover {

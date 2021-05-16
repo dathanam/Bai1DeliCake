@@ -8,7 +8,14 @@ import Item from './CakeComponent/Item';
 import EditItems from './CakeComponent/EditItems';
 import Recipes from './CakeComponent/Recipes';
 import NewRecipe from './CakeComponent/NewRecipe';
-import NewCake from './CakeComponent/NewCake'
+import NewCake from './CakeComponent/NewCake';
+import DetailRecipe from './CakeComponent/DetailRecipe';
+
+
+// User
+import UserHeader from './CakeUserComponent/Header';
+import UserHome from './CakeUserComponent/Home';
+
 
 function App() {
   return (
@@ -41,6 +48,9 @@ function App() {
             <Route path="/recipes" component={Recipes} />
             <Route path="/newrecipe" component={NewRecipe} />
             <Route path="/newcake" component={NewCake} />
+            <Route path="/detailRecipe" component={DetailRecipe}/>
+            <Route path="/userheader" component={UserHeader}/>
+            <Route path="/userhome" component={UserHome}/>
           </Switch>
           <Footer />
         </Container>

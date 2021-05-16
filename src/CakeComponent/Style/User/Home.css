@@ -1,0 +1,31 @@
+.userHome {
+    border: 2px double black;
+}
+.aaa{
+    height: 100px;
+}
+.carousel-item{
+    height: 500px;
+}
+.homeSub{
+    margin-left: 0px;
+}
+.pictrue-title {
+    margin-top: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.pictrue-money {
+    font-weight: bold;
+    font-size: 16px;
+    color: red;
+    transform: translate(0px, -15px);
+}
+.owl-theme{
+    text-align: center;
+}
+.homeBody{
+    padding: 0px 100px;
+}
