@@ -10,6 +10,8 @@ import Recipes from './CakeComponent/Recipes';
 import NewRecipe from './CakeComponent/NewRecipe';
 import NewCake from './CakeComponent/NewCake';
 import DetailRecipe from './CakeComponent/DetailRecipe';
+import UserDetail from './CakeUserComponent/Detail';
+import Cart from './CakeUserComponent/Cart';
 
 
 // User
@@ -51,6 +53,8 @@ function App() {
             <Route path="/detailRecipe" component={DetailRecipe}/>
             <Route path="/userheader" component={UserHeader}/>
             <Route path="/userhome" component={UserHome}/>
+            <Route path="/userdetail" component={UserDetail}/>
+            <Route path="/cart" component={Cart}/>
           </Switch>
           <Footer />
         </Container>

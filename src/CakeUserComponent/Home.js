@@ -72,7 +72,7 @@ function Home() {
                                 <img src="https://i.ytimg.com/vi/EJ5AlErxLWY/maxresdefault.jpg" alt="logo" />
                                 <p className="pictrue-title">TenMon</p>
                                 <p className="pictrue-money">DonGia<u>đ</u></p>
-                                <button type="button" class="btn btn-outline-warning btn-sm">Add To Cart</button>
+                                <button type="button" class="btn btn-outline-warning btn-sm">Add To Cart <i class="fas fa-cart-plus"></i></button>
                             </div>                   
                         </OwlCarousel>
                     </div>
@@ -84,7 +84,7 @@ function Home() {
                                 <img src="https://i.ytimg.com/vi/EJ5AlErxLWY/maxresdefault.jpg" alt="logo" />
                                 <p className="pictrue-title">TenMon</p>
                                 <p className="pictrue-money">DonGia<u>đ</u></p>
-                                <button type="button" class="btn btn-outline-warning btn-sm">Add To Cart</button>
+                                <button type="button" class="btn btn-outline-warning btn-sm">Add To Cart <i class="fas fa-cart-plus"></i></button>
                             </div>                   
                         </OwlCarousel>
                     </div>

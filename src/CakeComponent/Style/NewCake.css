@@ -1,6 +1,9 @@
 .newCake {
     border: 2px double black;
 }
+.detail{
+    border: 2px double black;
+}
 
 .rowCake {
     padding: 50px;
@@ -84,4 +87,38 @@
     background-color: rgb(243, 51, 83);
     box-shadow: 0 5px #666;
     transform: translateY(4px);
+}
+
+/* UserDetail */
+.otherproducts{
+    padding: 40px;
+}
+.otherproducts img{
+    width: 120px;
+    height: 100px;
+}
+.owl-theme{
+    margin-top: 20px;
+}
+.detailPictrueTitle{
+    margin-top: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 16px;
+}
+.detailPictrueMoney{
+    font-weight: bold;
+    font-size: 16px;
+    color: red;
+    transform: translate(0px);
+}
+.PictrueMoney{
+    font-weight: bold;
+    font-size: 26px;
+    color: red;
+    transform: translate(0px);
+}
+.detail h1{
+    text-shadow: 2px 2px #af09af;
+
 }
