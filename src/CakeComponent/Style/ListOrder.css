@@ -88,3 +88,6 @@ th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
+.optionComfirm {
+    width: 95px;
+}

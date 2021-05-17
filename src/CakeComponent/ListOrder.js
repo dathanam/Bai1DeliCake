@@ -19,11 +19,16 @@ function List_Order(props) {
     }
     useEffect(() => {
         getArr();
-    }, []);
+    }, [orderDetail]);
 
     const [id, setID] = useState({
         id: ""
     });
+
+    const [dataEdit, setDataEdit] = useState({
+        make_invoice: 1
+    })
+
     const getOrderDetail = async () => {
         const response = await axios
             .get(`/api/v1/orders/` + id.id)
@@ -37,12 +42,69 @@ function List_Order(props) {
         getOrderDetail();
     }, [id.id]);
 
+    // get by stt
+    const [stt, setStt] = useState({
+        name: ""
+    });
+    function handle(e) {
+        const newdata = { ...stt };
+        newdata[e.target.id] = e.target.value;
+        setStt(newdata);
+    }
+    const getByStt = async () => {
+        if (stt.name === "") {
+            getArr()
+        }
+        else {
+            const response = await axios
+                .get(`api/v1/orders/stt/` + stt.name)
+                .catch((err) => console.log("Error: ", err));
+
+            if (response && response.data) {
+                setListOrder(response.data.data)
+            }
+        }
+    }
+    useEffect(() => {
+        getByStt();
+    }, [stt.name]);
+
+    // get by date
+    const [date, setDate] = useState({
+        start: "",
+        finish: ""
+    });
+    const getByDate = async () => {
+        if (date.start === "" || date.finish === "") {
+            getArr()
+        }
+        else {
+            const response = await axios
+                .get(`api/v1/orders/date?start=1617211000&end=1619715600`)
+                .catch((err) => console.log("Error: ", err));
+
+            if (response && response.data) {
+                setListOrder(response.data.data)
+            }
+        }
+    }
+    useEffect(() => {
+        getByDate();
+    }, [date.start, date.finish]);
+
     function checkInvoice(status, id) {
         if (status === "completed" || status === "cancelled") {
             return (
                 <div className="checked">
                     <button disabled="disabled" type="button" className="btnChecked">Make Invoice</button>
-                    <button className="deleteChecked">
+                    <button className="deleteChecked"
+                        onClick={() => {
+                            axios.delete(`api/v1/orders/?ids=` + id)
+                                .then(res => {
+                                    getArr();
+                                })
+                        }
+                        }>
                         <i class="far fa-trash-alt"></i>
                     </button>
                 </div>
@@ -85,21 +147,47 @@ function List_Order(props) {
                 <br />
                 <div className="row">
                     <div className="col-md-3">
-                        <select className="status">
-                            <option value="completed">Completed</option>
-                            <option value="pending" selected>Pending</option>
-                            <option value="confirmed">Confirmed</option>
+                        <select className="status" onChange={(e) => handle(e)} id="name" value={stt.name}>
+                            <option value={""}>All</option>
+                            <option value={"completed"}>Completed</option>
+                            <option value={"pending"}>Pending</option>
+                            <option value={"confirmed"}>Confirmed</option>
+                            <option value={"cancelled"}>Cancelled</option>
                         </select>
                     </div>
                     <div className="col-md-3"></div>
-                    <div className="col-md-3">
-                        <label for="fromdate">From date: </label>
-                        <input type="date" id="fromdate" name="fromdate" />
+                    <div className="col-md-6">
+                        <form>
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <label for="fromdate">From date: </label>
+                                    <input
+                                        type="date"
+                                        name="start"
+                                        value={date.start}
+                                        onChange={event => setDate({
+                                            "start": event.target.value,
+                                            "finish": date.finish
+                                        })}
+                                    />
+                                </div>
+                                <div className="col-md-6">
+                                    <label for="todate">To date: </label>
+                                    <input
+                                        type="date"
+                                        name="start"
+                                        value={date.finish}
+                                        onChange={event => setDate({
+                                            "start": date.start,
+                                            "finish": event.target.value
+                                        })}
+                                    />
+                                </div>
+                            </div>
+                            <button>search</button>
+                        </form>
                     </div>
-                    <div className="col-md-3">
-                        <label for="todate">To date: </label>
-                        <input type="date" id="todate" name="todate" />
-                    </div>
+
                 </div>
                 <br />
                 <table class="table table-bordered">
@@ -133,10 +221,8 @@ function List_Order(props) {
                                         <td>$ {item.total}</td>
                                         <td>{item.user.phone_number}</td>
                                         <td>
-                                            <select>
-                                                <option>Completed</option>
-                                                <option>Pending</option>
-                                                <option>Confirmed</option>
+                                            <select className="optionComfirm">
+                                                <option>{item.status}</option>
                                             </select>
                                         </td>
                                         <td>{item.user.phone_number}</td>
@@ -249,6 +335,19 @@ function List_Order(props) {
                                             <h5>Voucher: {item.voucher}</h5>
                                             <h5>Tax: {item.tax}</h5>
                                             <h5>Total: ${item.total}</h5>
+                                            <br />
+                                            <button type="button" onClick={toggleMakeInvoice} className="btnAddSub1">Cancel</button>
+                                            <button className="btnAddSub1"
+                                                onClick={() => {
+                                                    axios.put(`api/v1/orders/make_invoice/` + item.id, dataEdit).then((res) => {
+                                                        if (res.statusText === "OK") {
+                                                            getOrderDetail()
+                                                            toggleMakeInvoice()
+                                                        }
+                                                    })
+                                                }
+                                                }
+                                            >Save</button>
                                         </div>
                                     )
                                 })
@@ -256,9 +355,6 @@ function List_Order(props) {
 
                         </div>
                     </div>
-                    <br />
-                    <button type="button" onClick={toggleMakeInvoice} className="btnAddSub1">Cancel</button>
-                    <button className="btnAddSub1">Save</button>
                 </ModalBody>
             </Modal>
 
