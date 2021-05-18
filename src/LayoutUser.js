@@ -14,9 +14,9 @@ function LayoutUser() {
                 <Container>
                     <UserHeader />
                     <Switch>
-                        <Route path="/" component={UserHome} />
-                        <Route path="/userdetail" component={UserDetail} />
-                        <Route path="/cart" component={Cart} />
+                        <Route path="/a" component={UserHome} />
+                        <Route path="/d" component={UserDetail} />
+                        <Route path="/" component={Cart} />
                     </Switch>
                     <Footer />
                 </Container>

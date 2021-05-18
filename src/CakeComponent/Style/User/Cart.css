@@ -1,0 +1,28 @@
+.cart{
+    border: 2px double black;
+}
+.cartRow{
+    padding: 50px 50px;
+}
+.imgCart{
+    width: 80px;
+    height: 70;
+    border-radius: 10px;
+}
+.cartAmount{
+    width: 40px;
+}
+.summary{
+    margin-top: 15px;
+}
+.total{
+    color: red;
+    font-size: 25px;
+}
+.btnCart{
+    text-align: center;
+    margin: 20px;
+}
+.btnCart button{
+    margin: 5px;
+}
