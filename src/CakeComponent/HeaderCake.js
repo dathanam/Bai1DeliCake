@@ -1,6 +1,6 @@
 import React from 'react';
 import './Style/HeaderCake.css';
-import { BrowserRouter as Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function HeaderCake() {
     return (
@@ -12,13 +12,13 @@ function HeaderCake() {
 
                 <ul className="navbar-nav">
                     <li className="nav-item">
-                        <Link to="/" className="nav-link">List Order</Link>
+                        <Link to="/admin" className="nav-link">List Order</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/items" className="nav-link">Items</Link>
+                        <Link to="/admin/items" className="nav-link">Items</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/recipes" className="nav-link">Recipes</Link>
+                        <Link to="/admin/recipes" className="nav-link">Recipes</Link>
                     </li>
                 </ul>
             </nav>

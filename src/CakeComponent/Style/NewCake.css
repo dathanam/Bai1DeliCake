@@ -1,7 +1,7 @@
 .newCake {
     border: 2px double black;
 }
-.detail{
+.detail {
     border: 2px double black;
 }
 
@@ -9,16 +9,22 @@
     padding: 50px;
 }
 .col-7 {
-    border: 2px double black;
+    border: 1px double black;
 }
 .abc img {
-    margin: 10px;
-    width: 100px;
-    border: 2px double black;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 100px;
+    width: auto;
 }
 .abc {
-    border-top: 2px double black;
-    margin-top: 30px;
+    border-top: 1px double black;
+    margin-top: 20px;
+    padding: 0 40px;
+}
+.imgdetail img {
+    border: none;
+    border-radius: 20px;
 }
 .imgdetail {
     border: none;
@@ -29,6 +35,14 @@
     margin-right: auto;
     width: 500px;
     margin-top: 20px;
+    border-radius: 20px;
+}
+.btnInputImg input {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    transform: translate(+90px, 0px);
+    margin-bottom: 5px;
 }
 .cakeBody {
     padding: 0px 50px;
@@ -90,35 +104,64 @@
 }
 
 /* UserDetail */
-.otherproducts{
+.otherproducts {
     padding: 40px;
 }
-.otherproducts img{
+.otherproducts img {
     width: 120px;
     height: 100px;
 }
-.owl-theme{
+.owl-theme {
     margin-top: 20px;
 }
-.detailPictrueTitle{
+.detailPictrueTitle {
     margin-top: 10px;
     text-transform: uppercase;
     font-weight: bold;
     font-size: 16px;
 }
-.detailPictrueMoney{
+.detailPictrueMoney {
     font-weight: bold;
     font-size: 16px;
     color: red;
     transform: translate(0px);
 }
-.PictrueMoney{
+.PictrueMoney {
     font-weight: bold;
     font-size: 26px;
     color: red;
     transform: translate(0px);
 }
-.detail h1{
+.detail h1 {
     text-shadow: 2px 2px #af09af;
-
+}
+.inputName {
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: groove;
+    background-color: #eee;
+    font-size: 20px;
+    font-family: cursive;
+    margin-left: 10px;
+}
+.inputName:focus {
+    outline: none;
+}
+.LabelNameInput {
+    transform: translateY(15px);
+    margin-right: 10px;
+}
+.inputSize {
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: hidden;
+    background-color: #eee;
+    font-size: 15px;
+    font-family: cursive;
+    margin-left: 10px;
+}
+.inputSize:focus {
+    outline: none;
 }

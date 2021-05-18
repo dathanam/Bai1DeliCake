@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import './Style/Recipes.css'
 import { axios } from '../component/axios'
 import { BrowserRouter as Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import DetailRecipe from '../CakeComponent/DetailRecipe'
 
 function Recipes() {
+    const history = useHistory();
     const [listRecipes, setListRecipes] = useState([]);
     const [inputName, setInputName] = useState({
         nameSearch: ""
@@ -21,6 +24,10 @@ function Recipes() {
         getRecipes();
     }, []);
 
+    const [idRecipe, setIDRecipe] = useState({
+        idcate: ""
+    });
+
     const [listCategory, setListCategory] = useState([]);
 
     const getCategory = async () => {
@@ -36,13 +43,18 @@ function Recipes() {
         getCategory();
     }, []);
 
-    // Search
+    // Search by ID
     const getSearch = async () => {
-        const response = await axios
-            .get(`api/v1/recipes/` + inputName.nameSearch)
-            .catch((err) => console.log("Error: ", err));
-        if (response && response.data) {
-            setListRecipes(response.data.data);
+        if (inputName.nameSearch === "") {
+            getRecipes();
+        }
+        else {
+            const response = await axios
+                .get(`api/v1/recipes/` + inputName.nameSearch)
+                .catch((err) => console.log("Error: ", err));
+            if (response && response.data) {
+                setListRecipes(response.data.data);
+            }
         }
     }
     useEffect(() => {
@@ -59,6 +71,33 @@ function Recipes() {
         getSearch();
     }
 
+    // search by category
+    const [stt, setStt] = useState({
+        name: ""
+    });
+    function handle(e) {
+        const newdata = { ...stt };
+        newdata[e.target.id] = e.target.value;
+        setStt(newdata);
+    }
+    const getByStt = async () => {
+        if (stt.name === "") {
+            getRecipes()
+        }
+        else {
+            const response = await axios
+                .get(`api/v1/recipes/cate/` + stt.name)
+                .catch((err) => console.log("Error: ", err));
+
+            if (response && response.data) {
+                setListRecipes(response.data.data)
+            }
+        }
+    }
+    useEffect(() => {
+        getByStt();
+    }, [stt.name]);
+
     return (
         <div className="recipes">
             <div className="borderRecipes">
@@ -66,16 +105,16 @@ function Recipes() {
                     <div className="col-md-3">
                         <form onSubmit={(e) => submitSearchName(e)}>
                             <input onChange={(e) => Search(e)} id="nameSearch" type="text" placeholder="ID/Name" />
-                            <button>search</button>
                         </form>
                     </div>
                     <div className="col-md-3"></div>
                     <div className="col-md-3">
-                        <select>
-                            {
-                                listCategory.map((item) =>
-                                    <option>{item.name}</option>)
-                            }
+                        <select className="status" onChange={(e) => handle(e)} id="name" value={stt.name}>
+                            <option value={""}>All</option>
+                            <option value={"Birthday Cake"}>Birthday Cake</option>
+                            <option value={"Cheese Cake"}>Cheese Cake</option>
+                            <option value={"Dessert Cake"}>Dessert Cake</option>
+                            <option value={"Bread"}>Bread</option>
                         </select>
                     </div>
                     <div className="col-md-3">
@@ -88,14 +127,9 @@ function Recipes() {
                     <table className="table">
                         <thead>
                             <tr>
-                                <th>
-                                    {/* <button
-                                onClick={deleteItemById()}>
-                                <i class="far fa-trash-alt"></i>
-                            </button> */}
-                                </th>
+                                <th></th>
                                 <th>ID</th>
-                                <th>Title</th>
+                                <th>Name Cake</th>
                                 <th>Piblic at</th>
                                 <th>Category</th>
                                 <th>SubCategory</th>
@@ -113,12 +147,28 @@ function Recipes() {
                                             <td className="id">
                                                 <label for={item.name}> {item.id}</label>
                                             </td>
-                                            <td>{item.title}</td>
-                                            <td>{item.publish_at}</td>
+                                            <td>{item.name_cake}</td>
+                                            <td>{Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(item.publish_at)}</td>
                                             <td>{item.category}</td>
                                             <td>{item.subcategory}</td>
                                             <td className="abc">
-                                                <button> <i className="fas fa-edit"></i>
+                                                <button onClick={() => {
+                                                    history.push("/admin/detailRecipe/" + item.id)
+                                                }}>
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button>
+                                                    <i className="fas fa-edit"></i>
+                                                </button>
+                                                <button
+                                                    onClick={() => {
+                                                        axios.delete(`api/v1/recipes/?id=` + item.id)
+                                                            .then(res => {
+                                                                getRecipes();
+                                                            })
+                                                    }
+                                                    }>
+                                                    <i class="far fa-trash-alt"></i>
                                                 </button>
                                             </td>
                                         </tr>

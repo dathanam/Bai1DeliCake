@@ -1,6 +1,6 @@
 import React from 'react';
 import '../CakeComponent/Style/User/Header.css'
-import { BrowserRouter as Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Header() {
 
@@ -12,7 +12,7 @@ function Header() {
                 </a>
                 <ul className="navbar-nav">
                     <li className="nav-item">
-                        <Link to="/user" className="nav-link">Home</Link>
+                        <Link to="/" className="nav-link">Home</Link>
                     </li>
                     <li className="nav-item dropdown">
                         <a className="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
@@ -61,10 +61,10 @@ function Header() {
                         </div>
                     </li>
                     <li className="nav-item">
-                        <Link to="/user/recipes" className="nav-link">Recipes</Link>
+                        <Link to="/recipes" className="nav-link">Recipes</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/user/aboutus" className="nav-link">About us</Link>
+                        <Link to="/aboutus" className="nav-link">About us</Link>
                     </li>
                 </ul>
                 <div className="UserSearchCake">

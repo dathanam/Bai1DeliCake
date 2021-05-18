@@ -7,7 +7,6 @@ import AllItem from '../CakeComponent/AllItems'
 function Item() {
 
     const [listCategory, setListCategory] = useState([]);
-
     const getArr = async () => {
         const response = await axios
             .get("api/v1/categories")

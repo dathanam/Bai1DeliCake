@@ -67,7 +67,6 @@ function AllItems(props) {
                     <div className="col-md-3">
                         <form onSubmit={(e) => submitSearchName(e)}>
                             <input onChange={(e) => Search(e)} id="nameSearch" type="text" placeholder="ID/Name" />
-                            <button type="submit">search</button>
                         </form>
                     </div>
                     <div className="col-md-1"></div>
@@ -99,8 +98,8 @@ function AllItems(props) {
             category_id: dataCreateSubCategories.category_id
         }).then((res) => {
             if (res.statusText === "OK") {
-                history.push("/items");
                 toggle();
+                getArr();
             }
         })
     }
@@ -130,7 +129,6 @@ function AllItems(props) {
     }
 
     function submitSearchName() {
-        console.log("dd")
         getSearch();
     }
 
@@ -155,7 +153,7 @@ function AllItems(props) {
         Axios.put("http://192.168.1.250:5012/api/v1/items/" + dataEdit.id, dataEdit).then((res) => {
             if (res.statusText === "OK") {
                 toggleEditItem();
-                history.push("/items");
+                getArr();
             }
         })
     }
@@ -169,20 +167,10 @@ function AllItems(props) {
         url: "",
         post: ""
     });
-    console.log(objectURL)
     useEffect(() => {
         if (!objectURL.url) return;
     }, [objectURL.post])
 
-    // const deleteItemById = () => {
-    //     let ArrItemDelete = [];
-    //     listCategoriesDetail.forEach(d => {
-    //         if (d.select) {
-    //             ArrItemDelete.push(d.id)
-    //         }
-    //     });
-    //     console.log(ArrItemDelete)
-    // }
 
     return (
         <div className="col-9">
@@ -192,12 +180,7 @@ function AllItems(props) {
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>
-                            {/* <button
-                                onClick={deleteItemById()}>
-                                <i class="far fa-trash-alt"></i>
-                            </button> */}
-                        </th>
+                        <th></th>
                         <th>ID</th>
                         <th>Name</th>
                         <th>Price</th>
@@ -219,8 +202,8 @@ function AllItems(props) {
                                     </td>
                                     <td>{item.name}</td>
                                     <td>$ {item.price}</td>
-                                    <td>{item.category.name}</td>
-                                    <td>{item.subcategory.name}</td>
+                                    <td>{item.category}</td>
+                                    <td>{item.subcategory}</td>
                                     <td className="abc">
                                         <button
                                             onClick={() => {
@@ -252,6 +235,7 @@ function AllItems(props) {
                 </tbody>
             </table>
 
+            {/* New SubCategory */}
             <Modal isOpen={modal} toggle={toggle} className={modalAdd}>
                 <ModalHeader toggle={toggle} charCode="X"></ModalHeader>
                 <ModalBody>
@@ -261,6 +245,7 @@ function AllItems(props) {
                             <br />
                             <input onChange={(e) => handle(e)} id="name" value={dataCreateSubCategories.name} class="w3-input w3-animate-input" type="text" placeholder="Name SubCategory"></input>
                             <select onChange={(e) => handle(e)} id="category_id" value={dataCreateSubCategories.category_id}>
+                                <option>Category</option>
                                 <option value={1}>BirthDay Cake</option>
                                 <option value={2}>Cheese Cake</option>
                                 <option value={3}>Dessert Cake</option>

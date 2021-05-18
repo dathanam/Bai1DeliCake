@@ -8,6 +8,11 @@ function List_Order(props) {
 
     const [listOrder, setListOrder] = useState([]);
     const [orderDetail, setOrderDetail] = useState([]);
+
+    const timestamp = orderDetail.created_date;
+    const convertTimeStampToNow = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(timestamp)
+
+
     const getArr = async () => {
         const response = await axios
             .get("/api/v1/orders")
@@ -72,15 +77,18 @@ function List_Order(props) {
     // get by date
     const [date, setDate] = useState({
         start: "",
-        finish: ""
+        finish: "",
+        convertStartToStamp: "",
+        convertFinishToStamp: ""
     });
+
     const getByDate = async () => {
-        if (date.start === "" || date.finish === "") {
+        if (date.convertStartToStamp === "" || date.convertFinishToStamp === "") {
             getArr()
         }
         else {
             const response = await axios
-                .get(`api/v1/orders/date?start=1617211000&end=1619715600`)
+                .get(`api/v1/orders/date?start=` + date.convertStartToStamp + `&end=` + date.convertFinishToStamp)
                 .catch((err) => console.log("Error: ", err));
 
             if (response && response.data) {
@@ -167,7 +175,9 @@ function List_Order(props) {
                                         value={date.start}
                                         onChange={event => setDate({
                                             "start": event.target.value,
-                                            "finish": date.finish
+                                            "finish": date.finish,
+                                            "convertStartToStamp": parseInt((new Date(event.target.value).getTime() / 1000).toFixed(0)),
+                                            "convertFinishToStamp": date.convertFinishToStamp
                                         })}
                                     />
                                 </div>
@@ -175,16 +185,17 @@ function List_Order(props) {
                                     <label for="todate">To date: </label>
                                     <input
                                         type="date"
-                                        name="start"
+                                        name="finish"
                                         value={date.finish}
                                         onChange={event => setDate({
                                             "start": date.start,
-                                            "finish": event.target.value
+                                            "finish": event.target.value,
+                                            "convertStartToStamp": date.convertStartToStamp,
+                                            "convertFinishToStamp": parseInt((new Date(event.target.value).getTime() / 1000).toFixed(0))
                                         })}
                                     />
                                 </div>
                             </div>
-                            <button>search</button>
                         </form>
                     </div>
 
@@ -307,7 +318,7 @@ function List_Order(props) {
                                             <h5>Address: {item.user.address}</h5>
                                             <h5>Phone Number: {item.user.phone_number}</h5>
                                             <h5>Email: {item.user.email}</h5>
-                                            <h5>Date: {item.created_date}</h5>
+                                            <h5>Date: {convertTimeStampToNow}</h5>
                                             <table>
                                                 <tr>
                                                     <th>Description</th>
