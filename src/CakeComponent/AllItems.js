@@ -3,6 +3,7 @@ import { axios } from '../component/axios'
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import Axios from 'axios';
 import { useHistory } from "react-router-dom";
+import NewCake from '../CakeComponent/NewCake'
 
 function AllItems(props) {
     const listcategory = props.listCategory
@@ -11,7 +12,6 @@ function AllItems(props) {
     const [inputName, setInputName] = useState({
         nameSearch: ""
     })
-
     let url = "";
     if (!props.name.idcate && !props.name.idsub) {
         url = "api/v1/items";
@@ -77,7 +77,9 @@ function AllItems(props) {
                     </div>
                     <div className="col-md-4">
                         <button className="btnAddSub"
-                            onClick={toggleAddCake}
+                            onClick={() => {
+                                history.push("/admin/newcake")
+                            }}
                         >Add New Cake</button>
                     </div>
                 </div>
@@ -98,8 +100,8 @@ function AllItems(props) {
             category_id: dataCreateSubCategories.category_id
         }).then((res) => {
             if (res.statusText === "OK") {
+                getCategories();
                 toggle();
-                getArr();
             }
         })
     }
@@ -137,16 +139,15 @@ function AllItems(props) {
         name: "",
         price: "",
         subcategory_id: "",
-        category_id: ""
+        categoryName: ""
     })
     const {
-        classNameEdit
+        classNameEdit, getCategories
     } = props;
 
     const [editItem, setEditItem] = useState(false);
 
     const toggleEditItem = () => setEditItem(!editItem);
-
 
     function submitItem(e) {
         e.preventDefault();
@@ -171,9 +172,52 @@ function AllItems(props) {
         if (!objectURL.url) return;
     }, [objectURL.post])
 
+    function showSub() {
+        if (dataEdit.categoryName === "") {
+            return
+        }
+        else {
+            let ArrCategory = listcategory.filter((category) => category.name === dataEdit.categoryName)
+            return ArrCategory.map((item) => {
+                return (
+                    <select onChange={(e) => handlee(e)} id="subcategory_id" value={dataEdit.subcategory_id}>
+                        {
+                            item.subcategory.map((icon) => {
+                                return (
+                                    <option value={icon.id}>{icon.name}</option>
+                                )
+                            })
+                        }
+                    </select>
+                )
+            })
 
+        }
+    }
+    // function saveCake() {
+    //     if (objectURL.url === "") {
+    //         return (
+    //             <button disabled="disabled" type="button" className="btnAddSub"
+    //                 onClick={() => {
+    //                     saveCake()
+    //                 }}
+    //             >Save</button>
+    //         )
+    //     } else {
+    //         return (
+    //             <button type="button" className="btnAddSub"
+    //                 onClick={() => {
+    //                     saveCake()
+    //                     history.push("/admin/newcake", { src: objectURL.url })
+    //                 }}
+    //             >Save
+    //             </button>
+    //         )
+
+    //     }
+    // }
     return (
-        <div className="col-9">
+        <div className="col-10">
             <br />
             {showbutton()}
             <br />
@@ -181,7 +225,7 @@ function AllItems(props) {
                 <thead>
                     <tr>
                         <th></th>
-                        <th>ID</th>
+                        {/* <th>ID</th> */}
                         <th>Name</th>
                         <th>Price</th>
                         <th>Category</th>
@@ -197,9 +241,9 @@ function AllItems(props) {
                                     <td>
                                         <input id="checkbox" type="checkbox" name={item.name} />
                                     </td>
-                                    <td className="id">
+                                    {/* <td className="id">
                                         <label for={item.name}> {item.id}</label>
-                                    </td>
+                                    </td> */}
                                     <td>{item.name}</td>
                                     <td>$ {item.price}</td>
                                     <td>{item.category}</td>
@@ -211,8 +255,7 @@ function AllItems(props) {
                                                     "id": item.id,
                                                     "name": item.name,
                                                     "price": item.price,
-                                                    "subcategory_id": item.subcategory.id,
-                                                    "category_id": item.category.id
+                                                    "categoryName": item.category
                                                 })
                                                 toggleEditItem();
                                             }
@@ -243,7 +286,8 @@ function AllItems(props) {
                         <div>
                             <h3>New SubCategory</h3>
                             <br />
-                            <input onChange={(e) => handle(e)} id="name" value={dataCreateSubCategories.name} class="w3-input w3-animate-input" type="text" placeholder="Name SubCategory"></input>
+                            <input onChange={(e) => handle(e)} id="name" value={dataCreateSubCategories.name} type="text" className="inputNewName" placeholder="Name SubCategory" />
+                            <br />
                             <select onChange={(e) => handle(e)} id="category_id" value={dataCreateSubCategories.category_id}>
                                 <option>Category</option>
                                 <option value={1}>BirthDay Cake</option>
@@ -260,7 +304,7 @@ function AllItems(props) {
             </Modal>
 
             {/* Add Cake */}
-            <Modal isOpen={modalCake} toggle={toggleAddCake} className={modalAddCake}>
+            {/* <Modal isOpen={modalCake} toggle={toggleAddCake} className={modalAddCake}>
                 <ModalHeader toggle={toggleAddCake} charCode="X"></ModalHeader>
                 <ModalBody>
                     <div className="row">
@@ -276,14 +320,16 @@ function AllItems(props) {
                                     })}></input>
                                 </div>
                                 <br />
-                                <button type="button" className="btnAddSub">Save</button>
+                                {
+                                    saveCake()
+                                }
                                 <button type="button" onClick={toggleAddCake} className="btnAddSub">Cancel</button>
                             </form>
                         </div>
                     </div>
 
                 </ModalBody>
-            </Modal>
+            </Modal> */}
 
             {/* EditItems */}
             <Modal isOpen={editItem} toggle={toggleEditItem} className={classNameEdit}>
@@ -293,19 +339,16 @@ function AllItems(props) {
                         <div>
                             <h3>Edit Item</h3>
                             <br />
-                            <input onChange={(e) => handlee(e)} id="name" value={dataEdit.name} class="w3-input w3-animate-input" type="text" placeholder="Name"></input>
-                            <input onChange={(e) => handlee(e)} id="price" value={dataEdit.price} class="w3-input w3-animate-input" type="text" placeholder="Price"></input>
-                            <select onChange={(e) => handlee(e)} id="subcategory_id" value={dataEdit.subcategory_id}>
-                                {
-                                    // listcategory.filter(item => item.id === dataEdit.category_id)[0].subcategory.map((item) =>
-                                    //     <option>{item.name}</option>
-                                    // )
-                                }
-                            </select>
+                            <input onChange={(e) => handlee(e)} id="name" value={dataEdit.name} type="text" className="inputName" placeholder="Cake Name" />
+                            <input onChange={(e) => handlee(e)} id="price" value={dataEdit.price} type="text" className="inputName" placeholder="price" />
+                            <br />
+                            {
+                                showSub()
+                            }
                             <br />
                             <br />
                         </div>
-                        <button type="submit" className="btnAddSub">Save</button>
+                        <button className="btnAddSub">Save</button>
                         <button type="button" onClick={toggleEditItem} className="btnAddSub1">Cancel</button>
                     </form>
                 </ModalBody>

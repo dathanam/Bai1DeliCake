@@ -8,7 +8,7 @@
 .rowCake {
     padding: 50px;
 }
-.col-7 {
+.cakeAvata {
     border: 1px double black;
 }
 .abc img {
@@ -35,6 +35,7 @@
     margin-right: auto;
     width: 500px;
     margin-top: 20px;
+    margin-bottom: 20px;
     border-radius: 20px;
 }
 .btnInputImg input {

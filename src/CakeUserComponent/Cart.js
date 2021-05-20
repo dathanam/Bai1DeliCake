@@ -6,68 +6,54 @@ function Cart() {
         <div className="cart">
             <div className="row cartRow">
                 <div className="col-md-9 bodyCart">
-                    <table>
+                    <table className="fixed">
                         <tr>
-                            <th>Image</th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Amount</th>
-                            <th>Total</th>
-                            <th>Delete</th>
+                            <th width="20%">Image</th>
+                            <th width="40%">Name</th>
+                            <th width="10%">Price</th>
+                            <th width="10%">Amount</th>
+                            <th width="10%">Total</th>
+                            <th width="10%">Delete</th>
                         </tr>
                         <tr>
-                            <td>
+                            <td width="20%">
                                 <img className="imgCart" src="https://th.bing.com/th/id/Rf9d392d758a9039d082850eded33ec79?rik=seEtV8YA5vY9sA&pid=ImgRaw" alt="logo" />
                             </td>
-                            <td>Name BirthDay Cake</td>
-                            <td>$123</td>
-                            <td><input id="amount" type="number" className="cartAmount" min="0" max="10" /></td>
-                            <td>$234</td>
-                            <td className="abc">
-                                <button>
-                                    <i class="far fa-trash-alt"></i>
+                            <td width="40%">Name BirthDay Cake</td>
+                            <td width="10%">$123</td>
+                            <td width="10%"><input id="amount" type="number" className="cartAmount" min="0" max="10" /></td>
+                            <td width="10%">$234</td>
+                            <td width="10%" className="abc">
+                                <button className="btnCartDelete">
+                                    <i className="far fa-trash-alt" />
                                 </button>
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td width="20%">
                                 <img className="imgCart" src="https://th.bing.com/th/id/Rf9d392d758a9039d082850eded33ec79?rik=seEtV8YA5vY9sA&pid=ImgRaw" alt="logo" />
                             </td>
-                            <td>Name BirthDay Cake</td>
-                            <td>$123</td>
-                            <td><input id="amount" type="number" className="cartAmount" min="0" max="10" /></td>
-                            <td>$234</td>
-                            <td className="abc">
-                                <button>
-                                    <i class="far fa-trash-alt"></i>
+                            <td width="40%">Name BirthDay Cake</td>
+                            <td width="10%">$123</td>
+                            <td width="10%"><input id="amount" type="number" className="cartAmount" value="1" min="0" max="10" /></td>
+                            <td width="10%">$234</td>
+                            <td width="10%" className="abc">
+                                <button className="btnCartDelete">
+                                    <i className="far fa-trash-alt" />
                                 </button>
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td width="20%">
                                 <img className="imgCart" src="https://th.bing.com/th/id/Rf9d392d758a9039d082850eded33ec79?rik=seEtV8YA5vY9sA&pid=ImgRaw" alt="logo" />
                             </td>
-                            <td>Name BirthDay Cake</td>
-                            <td>$123</td>
-                            <td><input id="amount" type="number" className="cartAmount" min="0" max="10" /></td>
-                            <td>$234</td>
-                            <td className="abc">
-                                <button>
-                                    <i class="far fa-trash-alt"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img className="imgCart" src="https://th.bing.com/th/id/Rf9d392d758a9039d082850eded33ec79?rik=seEtV8YA5vY9sA&pid=ImgRaw" alt="logo" />
-                            </td>
-                            <td>Name BirthDay Cake</td>
-                            <td>$123</td>
-                            <td><input id="amount" type="number" className="cartAmount" min="0" max="10" /></td>
-                            <td>$234</td>
-                            <td className="abc">
-                                <button>
-                                    <i class="far fa-trash-alt"></i>
+                            <td width="40%">Name BirthDay Cake</td>
+                            <td width="10%">$123</td>
+                            <td width="10%"><input id="amount" type="number" className="cartAmount" min="0" max="10" /></td>
+                            <td width="10%">$234</td>
+                            <td width="10%" className="abc">
+                                <button className="btnCartDelete">
+                                    <i className="far fa-trash-alt" />
                                 </button>
                             </td>
                         </tr>

@@ -42,6 +42,7 @@ function DetailRecipe(props) {
                                                 <div className="carousel-inner">
                                                     {
                                                         item.images_recipes.map((icon) => {
+                                                            console.log(icon)
                                                             return (
                                                                 <div className="carousel-item active">
                                                                     <img className="img-fluid" src={icon.name} alt="logo" />

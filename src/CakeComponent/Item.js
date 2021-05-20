@@ -30,42 +30,37 @@ function Item() {
             <div className="itemss">
                 <Container>
                     <div className="row">
-                        <div className="col-3">
+                        <div className="col-2 left">
                             {
                                 listCategory.map((item) => {
                                     return (
-                                        <ul className="danhmuc">
-                                            <li className="li1">
-                                                <div className="abc">
-                                                    <button
-                                                        onClick={() => setName({
-                                                            idcate: item.id
-                                                        })}>
-                                                        {item.name}
-                                                    </button>
-                                                </div>
-                                                <ul className="xyz">
-                                                    {
-                                                        item.subcategory.map((icon) => {
-                                                            return (
-                                                                <button
-                                                                    onClick={() => setName({
-                                                                        idsub: icon.id
-                                                                    })
-                                                                    }
-                                                                >{icon.name}</button>
-                                                            )
-                                                        })
-                                                    }
-                                                </ul>
-                                            </li>
-                                        </ul>
+                                        <>
+                                            <h5
+                                                onClick={() => setName({
+                                                    idcate: item.id
+                                                })}>
+                                                {item.name}
+                                            </h5>
+                                            <div className="homeSub">
+                                                {
+                                                    item.subcategory.map((icon) => {
+                                                        return (
+                                                            <p onClick={() => setName({
+                                                                idsub: icon.id
+                                                            })}>
+                                                                {icon.name}
+                                                            </p>
+                                                        )
+                                                    })
+                                                }
+                                            </div>
+                                        </>
                                     )
                                 })
                             }
                         </div>
 
-                        <AllItem name={name} listCategory={listCategory} />
+                        <AllItem name={name} listCategory={listCategory} getCategories={getArr} />
                     </div>
                 </Container>
             </div>

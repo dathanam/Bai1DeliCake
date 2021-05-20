@@ -1,28 +1,46 @@
-.cart{
+.cart {
     border: 2px double black;
 }
-.cartRow{
+.cartRow {
     padding: 50px 50px;
 }
-.imgCart{
+.imgCart {
     width: 80px;
     height: 70;
     border-radius: 10px;
 }
-.cartAmount{
+.cartAmount {
     width: 40px;
 }
-.summary{
+.summary {
     margin-top: 15px;
 }
-.total{
+.total {
     color: red;
     font-size: 25px;
 }
-.btnCart{
+.btnCart {
     text-align: center;
     margin: 20px;
 }
-.btnCart button{
+.btnCart button {
     margin: 5px;
+}
+table {
+    width: 100%;
+}
+.fixed td {
+    border: 0.2px solid gray;
+}
+.fixed {
+    table-layout: fixed;
+}
+.fixed td {
+    text-align: center;
+}
+th {
+    text-align: center;
+}
+.btnCartDelete {
+    transform: translateX(-17px);
 }

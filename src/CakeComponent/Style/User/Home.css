@@ -1,14 +1,14 @@
 .userHome {
     border: 2px double black;
 }
-.aaa{
+.aaa {
     height: 100px;
 }
-.carousel-item{
+.carousel-item {
     height: 500px;
 }
-.homeSub{
-    margin-left: 0px;
+.homeSub {
+    margin-left: 20px;
 }
 .pictrue-title {
     margin-top: 10px;
@@ -23,9 +23,9 @@
     color: red;
     transform: translate(0px, -15px);
 }
-.owl-theme{
+.owl-theme {
     text-align: center;
 }
-.homeBody{
+.homeBody {
     padding: 0px 100px;
 }

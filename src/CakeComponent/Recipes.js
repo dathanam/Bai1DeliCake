@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './Style/Recipes.css'
 import { axios } from '../component/axios'
-import { BrowserRouter as Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import DetailRecipe from '../CakeComponent/DetailRecipe'
+import moment from 'moment'
 
 function Recipes() {
     const history = useHistory();
     const [listRecipes, setListRecipes] = useState([]);
+    console.log(listRecipes.publish_at)
     const [inputName, setInputName] = useState({
         nameSearch: ""
     })
@@ -119,7 +120,10 @@ function Recipes() {
                     </div>
                     <div className="col-md-3">
                         <button className="btnAddSub"
-                        > <Link to="/newrecipe" className="nav-link">Add New Recipes</Link></button>
+                            onClick={() => {
+                                history.push("/admin/newrecipe")
+                            }}
+                        >Add New Recipes</button>
                     </div>
                 </div>
                 <br />
@@ -130,7 +134,7 @@ function Recipes() {
                                 <th></th>
                                 <th>ID</th>
                                 <th>Name Cake</th>
-                                <th>Piblic at</th>
+                                <th>Publish at</th>
                                 <th>Category</th>
                                 <th>SubCategory</th>
                                 <th></th>
@@ -148,7 +152,7 @@ function Recipes() {
                                                 <label for={item.name}> {item.id}</label>
                                             </td>
                                             <td>{item.name_cake}</td>
-                                            <td>{Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(item.publish_at)}</td>
+                                            <td>{moment(item.publish_at * 1000).format("DD/MM/YYYY")}</td>
                                             <td>{item.category}</td>
                                             <td>{item.subcategory}</td>
                                             <td className="abc">

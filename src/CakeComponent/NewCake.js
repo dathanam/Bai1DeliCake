@@ -4,8 +4,7 @@ import Axios from 'axios';
 import { useHistory } from "react-router-dom";
 import { axios } from '../component/axios'
 
-function NewCake() {
-
+function NewCake(props) {
     const [listCategory, setListCategory] = useState([]);
     const getArr = async () => {
         const response = await axios
@@ -22,10 +21,8 @@ function NewCake() {
 
     const [objectURL, setObjectURL] = useState({
         url: "",
-        post: "",
-        ArrImg: []
+        post: ""
     });
-    console.log("fsdfds", objectURL.post.name)
     // create
     const urlCreateItem = "http://192.168.1.250:5012/api/v1/images_items/create/"
     const [dataCreateItem, setDataCreateItem] = useState({
@@ -33,25 +30,23 @@ function NewCake() {
         size: "",
         price: "",
         product_detail: "",
-        subcategory_id: "2",
-        // images: {}
+        subcategory_id: "",
     })
-    console.log(dataCreateItem)
     const history = useHistory();
     function submit(e) {
         e.preventDefault();
-        Axios.post(urlCreateItem, {
-            name: dataCreateItem.name,
-            size: dataCreateItem.size,
-            price: dataCreateItem.price,
-            product_detail: dataCreateItem.product_detail,
-            subcategory_id: dataCreateItem.subcategory_id
-            // images: objectURL.post
-        }).then((res) => {
+        var formdata = new FormData();
+        formdata.append("name", dataCreateItem.name);
+        formdata.append("size", dataCreateItem.size);
+        formdata.append("price", dataCreateItem.price);
+        formdata.append("product_detail", dataCreateItem.product_detail);
+        formdata.append("subcategory_id", dataCreateItem.subcategory_id);
+        formdata.append("images", objectURL.post, "3.jpg");
+
+        Axios.post(urlCreateItem, formdata).then((res) => {
             if (res.statusText === "OK") {
-                console.log("OKE")
+                history.push("/admin/items")
             }
-            console.log("khong")
         })
     }
 
@@ -65,13 +60,22 @@ function NewCake() {
             <form onSubmit={(e) => submit(e)} >
                 <div className="row rowCake">
                     <div className="col-7">
-                        <div>
+                        <div className="row btnInputImg">
+                            <div className="col-12">
+                                <input type="file" className="custom" onChange={(e) => setObjectURL({
+                                    post: e.target.files[0],
+                                    url: URL.createObjectURL(e.target.files[0]),
+                                    // ArrImg: [URL.createObjectURL(e.target.files[0]), ...objectURL.ArrImg]
+                                })}></input>
+                            </div>
+                        </div>
+                        <div className="cakeAvata">
                             <div className="row avata">
                                 <div className="col-12">
-                                    <img className="img-fluid" src="https://th.bing.com/th/id/Rf9d392d758a9039d082850eded33ec79?rik=seEtV8YA5vY9sA&pid=ImgRaw" alt="logo" />
+                                    <img className="img-fluid" src={objectURL.url} alt="Image Cake" />
                                 </div>
                             </div>
-                            <div className="row abc">
+                            {/* <div className="row abc">
                                 {
                                     objectURL.ArrImg.map((item) => {
                                         return (
@@ -81,16 +85,8 @@ function NewCake() {
                                         )
                                     })
                                 }
-                            </div>
-                            <div className="row btnInputImg">
-                                <div className="col-12">
-                                    <input type="file" className="custom" onChange={(e) => setObjectURL({
-                                        post: e.target.files[0],
-                                        url: URL.createObjectURL(e.target.files[0]),
-                                        ArrImg: [URL.createObjectURL(e.target.files[0]), ...objectURL.ArrImg]
-                                    })}></input>
-                                </div>
-                            </div>
+                            </div> */}
+
                         </div>
                     </div>
                     <div className="col-5">
@@ -122,13 +118,13 @@ function NewCake() {
                                 </div>
                             </div>
                             <br />
-                            <select>
+                            <select onChange={(e) => handle(e)} id="subcategory_id" value={dataCreateItem.subcategory_id}>
                                 {
                                     listCategory.map((item) => {
                                         return (
                                             item.subcategory.map((icon) => {
                                                 return (
-                                                    <option>{icon.name}</option>
+                                                    <option value={icon.id}>{icon.name}</option>
                                                 )
                                             })
                                         )

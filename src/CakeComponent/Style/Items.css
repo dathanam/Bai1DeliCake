@@ -1,8 +1,8 @@
 .itemss {
     border: 2px double black;
 }
-.col-3 {
-    border-right: 2px double black;
+.left {
+    border-right: 1px double black;
 }
 .itemss ul li {
     list-style: none;
@@ -31,11 +31,7 @@
 .modal {
     text-align: center;
 }
-.modal input {
-    text-align: center;
-    width: 150px;
-    margin: auto;
-}
+
 .modal Button {
     background-color: white;
     color: red;
@@ -129,4 +125,19 @@
 }
 .imageCake {
     margin: 10px;
+}
+.inputNewName {
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: groove;
+    background-color: #eee;
+    font-size: 20px;
+    font-family: cursive;
+    margin-left: 10px;
+    text-align: center;
+    width: 200px;
+}
+.inputNewName:focus {
+    outline: none;
 }
