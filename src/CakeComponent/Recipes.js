@@ -99,6 +99,37 @@ function Recipes() {
         getByStt();
     }, [stt.name]);
 
+    // Delete Many
+    const [arrCheckBoxes, setArrCheckBoxes] = useState([])
+    let urlDelete = "api/v1/recipes/"
+    arrCheckBoxes.map((item) => {
+        urlDelete = urlDelete + "&ids=" + item
+    })
+    let urlDeleteMany = urlDelete.replace("&", "?");
+
+    // Show Button Delete
+    let showbutton = () => {
+        if (arrCheckBoxes[0] != undefined) {
+            return (
+                <th>
+                    <i
+                        onClick={() => {
+                            axios.delete(urlDeleteMany)
+                                .then(res => {
+                                    getRecipes();
+                                    setArrCheckBoxes([])
+                                })
+                        }}
+                        class="far fa-trash-alt"></i>
+                </th>
+            )
+        } else {
+            return (
+                <th></th>
+            )
+        }
+    }
+
     return (
         <div className="recipes">
             <div className="borderRecipes">
@@ -131,7 +162,7 @@ function Recipes() {
                     <table className="table">
                         <thead>
                             <tr>
-                                <th></th>
+                                {showbutton()}
                                 <th>ID</th>
                                 <th>Name Cake</th>
                                 <th>Publish at</th>
@@ -146,7 +177,24 @@ function Recipes() {
                                     return (
                                         <tr>
                                             <td>
-                                                <input id="checkbox" type="checkbox" name={item.name} />
+                                                <input type="checkbox"
+                                                    onChange={() => {
+                                                        let z = arrCheckBoxes.findIndex((icon) => icon === item.id);
+                                                        if (z === -1) {
+                                                            return setArrCheckBoxes([item.id, ...arrCheckBoxes]);
+                                                        } else {
+                                                            let newArr = [...arrCheckBoxes]
+                                                            let Arr = []
+                                                            newArr.map((icon) => {
+                                                                if (icon === item.id) {
+                                                                } else {
+                                                                    Arr = [...Arr, icon]
+                                                                }
+                                                            })
+                                                            setArrCheckBoxes(Arr)
+                                                        }
+                                                    }}
+                                                />
                                             </td>
                                             <td className="id">
                                                 <label for={item.name}> {item.id}</label>

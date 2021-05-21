@@ -145,6 +145,7 @@
     font-size: 20px;
     font-family: cursive;
     margin-left: 10px;
+    width: auto;
 }
 .inputName:focus {
     outline: none;
@@ -165,4 +166,19 @@
 }
 .inputSize:focus {
     outline: none;
+}
+.ImgNewCake img {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 10px;
+    border-radius: 30px;
+}
+.ImgNewCake {
+    border: 1px double black;
+}
+.rowNewCake {
+    margin: 30px;
+}
+.ddd {
+    border: 1px double black;
 }

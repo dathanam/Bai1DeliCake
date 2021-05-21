@@ -19,10 +19,8 @@ function NewCake(props) {
         getArr();
     }, []);
 
-    const [objectURL, setObjectURL] = useState({
-        url: "",
-        post: ""
-    });
+    const [objectURL, setObjectURL] = useState([]);
+
     // create
     const urlCreateItem = "http://192.168.1.250:5012/api/v1/images_items/create/"
     const [dataCreateItem, setDataCreateItem] = useState({
@@ -41,8 +39,9 @@ function NewCake(props) {
         formdata.append("price", dataCreateItem.price);
         formdata.append("product_detail", dataCreateItem.product_detail);
         formdata.append("subcategory_id", dataCreateItem.subcategory_id);
-        formdata.append("images", objectURL.post, "3.jpg");
-
+        objectURL.map((item) => {
+            formdata.append("images", item.post, "3.jpg");
+        })
         Axios.post(urlCreateItem, formdata).then((res) => {
             if (res.statusText === "OK") {
                 history.push("/admin/items")
@@ -55,6 +54,35 @@ function NewCake(props) {
         newdata[e.target.id] = e.target.value;
         setDataCreateItem(newdata);
     }
+    function disAbled() {
+        if (objectURL.length === 4) {
+            return (
+                <input disabled="disabled" type="file" className="custom" onChange={(e) => setObjectURL([...objectURL, {
+                    post: e.target.files[0],
+                    url: URL.createObjectURL(e.target.files[0]),
+                }])}></input>
+            )
+        } else {
+            return (
+                <input type="file" className="custom" onChange={(e) => setObjectURL([...objectURL, {
+                    post: e.target.files[0],
+                    url: URL.createObjectURL(e.target.files[0]),
+                }])}></input>
+            )
+        }
+    }
+    function ShowSave() {
+        if (objectURL.length === 0) {
+            return (
+                <button disabled="disabled" className="btnAddCakeSave">Save</button>
+            )
+        }
+        else {
+            return (
+                <button className="btnAddCakeSave">Save</button>
+            )
+        }
+    }
     return (
         <div className="newCake">
             <form onSubmit={(e) => submit(e)} >
@@ -62,32 +90,25 @@ function NewCake(props) {
                     <div className="col-7">
                         <div className="row btnInputImg">
                             <div className="col-12">
-                                <input type="file" className="custom" onChange={(e) => setObjectURL({
-                                    post: e.target.files[0],
-                                    url: URL.createObjectURL(e.target.files[0]),
-                                    // ArrImg: [URL.createObjectURL(e.target.files[0]), ...objectURL.ArrImg]
-                                })}></input>
+                                {disAbled()}
                             </div>
                         </div>
-                        <div className="cakeAvata">
-                            <div className="row avata">
-                                <div className="col-12">
-                                    <img className="img-fluid" src={objectURL.url} alt="Image Cake" />
+                        <div className="ImgNewCake">
+                            <div className="rowNewCake">
+                                <div className="row">
+                                    {
+                                        objectURL.map((item) => {
+                                            return (
+                                                <div className="col-md-6" key={item.url}>
+                                                    <img className="img-fluid" src={item.url} alt="logo" />
+                                                </div>
+                                            )
+                                        })
+                                    }
                                 </div>
                             </div>
-                            {/* <div className="row abc">
-                                {
-                                    objectURL.ArrImg.map((item) => {
-                                        return (
-                                            <div className="col-md-3 imgdetail">
-                                                <img className="img-fluid" src={item} alt="logo" />
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div> */}
-
                         </div>
+
                     </div>
                     <div className="col-5">
                         <div className="cakeBody">
@@ -96,7 +117,7 @@ function NewCake(props) {
                                     <h5 className="LabelNameInput">Name:</h5>
                                 </div>
                                 <div className="col-10">
-                                    <input onChange={(e) => handle(e)} id="name" value={dataCreateItem.name} type="text" className="inputName" />
+                                    <input onChange={(e) => handle(e)} id="name" value={dataCreateItem.name} type="text" className="inputName" required />
                                 </div>
                             </div>
                             <br />
@@ -105,7 +126,7 @@ function NewCake(props) {
                                     <p className="LabelSizeInput">Size:</p>
                                 </div>
                                 <div className="col-10">
-                                    <input onChange={(e) => handle(e)} id="size" value={dataCreateItem.size} type="text" placeholder="10cm x 10cm" className="inputSize" />
+                                    <input onChange={(e) => handle(e)} id="size" value={dataCreateItem.size} type="text" placeholder="10cm x 10cm" className="inputSize" required />
                                 </div>
                             </div>
                             <br />
@@ -114,7 +135,7 @@ function NewCake(props) {
                                     <h6 className="LabelSizeInput">Price:</h6>
                                 </div>
                                 <div className="col-10">
-                                    <input onChange={(e) => handle(e)} id="price" value={dataCreateItem.price} type="text" placeholder="$..." className="inputSize" />
+                                    <input onChange={(e) => handle(e)} id="price" value={dataCreateItem.price} type="text" placeholder="$..." className="inputSize" required />
                                 </div>
                             </div>
                             <br />
@@ -141,7 +162,7 @@ function NewCake(props) {
                             </div>
                             <br />
                             <div className="btnCake">
-                                <button className="btnAddCakeSave">Save</button>
+                                {ShowSave()}
                                 <button type="button" className="btnAddCakeCancel">Cancel</button>
                             </div>
                         </div>

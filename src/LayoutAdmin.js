@@ -10,6 +10,7 @@ import Recipes from './CakeComponent/Recipes';
 import NewRecipe from './CakeComponent/NewRecipe';
 import NewCake from './CakeComponent/NewCake';
 import DetailRecipe from './CakeComponent/DetailRecipe';
+import EditCake from './CakeComponent/EditCake';
 
 function LayoutAdmin() {
     return (
@@ -25,6 +26,7 @@ function LayoutAdmin() {
                         <Route path="/admin/newrecipe" component={NewRecipe} />
                         <Route path="/admin/newcake" component={NewCake} />
                         <Route path="/admin/detailRecipe/:id" component={DetailRecipe} />
+                        <Route path="/admin/editcake/:id" component={EditCake} />
                     </Switch>
                     <Footer />
                 </Container>

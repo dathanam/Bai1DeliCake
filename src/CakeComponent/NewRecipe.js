@@ -5,6 +5,7 @@ import Axios from 'axios'
 import { useHistory } from "react-router-dom";
 
 function NewRecipe() {
+    const history = useHistory();
     const [objectURL, setObjectURL] = useState({
         url: "",
         post: ""
@@ -36,7 +37,7 @@ function NewRecipe() {
         publish_at: "",
         item_id: ""
     })
-    const history = useHistory();
+
     function submit(e) {
         e.preventDefault();
         var formdata = new FormData();
@@ -116,7 +117,11 @@ function NewRecipe() {
                     <br />
                     <div className="btnnNewRecipe">
                         <button className="btnSave">Save</button>
-                        <button type="button" className="btnCancel">Cancel</button>
+                        <button type="button" className="btnCancel"
+                            onClick={() => {
+                                history.push("/admin/items")
+                            }}
+                        >Cancel</button>
                     </div>
                 </form>
             </div>

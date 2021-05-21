@@ -141,3 +141,6 @@
 .inputNewName:focus {
     outline: none;
 }
+.ListOrderSub {
+    margin-left: 20px;
+}

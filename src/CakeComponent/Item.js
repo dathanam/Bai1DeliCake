@@ -41,7 +41,7 @@ function Item() {
                                                 })}>
                                                 {item.name}
                                             </h5>
-                                            <div className="homeSub">
+                                            <div className="ListOrderSub">
                                                 {
                                                     item.subcategory.map((icon) => {
                                                         return (

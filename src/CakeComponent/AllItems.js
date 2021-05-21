@@ -3,15 +3,24 @@ import { axios } from '../component/axios'
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import Axios from 'axios';
 import { useHistory } from "react-router-dom";
-import NewCake from '../CakeComponent/NewCake'
 
 function AllItems(props) {
     const listcategory = props.listCategory
     const [listCategoriesDetail, setlistCategoriesDetail] = useState([]);
-    const [check, setCheck] = useState(false);
     const [inputName, setInputName] = useState({
         nameSearch: ""
     })
+    const history = useHistory();
+
+    // Delete Many
+    const [arrCheckBoxes, setArrCheckBoxes] = useState([])
+    let urlDelete = "api/v1/items/"
+    arrCheckBoxes.map((item) => {
+        urlDelete = urlDelete + "&ids=" + item
+    })
+    let urlDeleteMany = urlDelete.replace("&", "?");
+
+    // get item by Sub
     let url = "";
     if (!props.name.idcate && !props.name.idsub) {
         url = "api/v1/items";
@@ -24,6 +33,8 @@ function AllItems(props) {
             url = `api/v1/items/sub/${props.name.idsub}`;
         }
     }
+
+    //Get List Items
     const getArr = async () => {
         const response = await axios
             .get(url)
@@ -43,50 +54,30 @@ function AllItems(props) {
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
 
-
-    const {
-        modalAddCake
-    } = props;
-    const [modalCake, setModalCake] = useState(false);
-    const toggleAddCake = () => setModalCake(!modalCake);
-
-    const history = useHistory();
-    function EditItem(id) {
-        history.push("/edititem/" + id)
-    }
+    // Show Button Delete
     let showbutton = () => {
-        if (check) {
+        if (arrCheckBoxes[0] != undefined) {
             return (
-                <div className="row">
-                    <h1>hello</h1>
-                </div>
+                <th>
+                    <i
+                        onClick={() => {
+                            axios.delete(urlDeleteMany)
+                                .then(res => {
+                                    getArr();
+                                    setArrCheckBoxes([])
+                                })
+                        }}
+                        class="far fa-trash-alt"></i>
+                </th>
             )
         } else {
             return (
-                <div className="row">
-                    <div className="col-md-3">
-                        <form onSubmit={(e) => submitSearchName(e)}>
-                            <input onChange={(e) => Search(e)} id="nameSearch" type="text" placeholder="ID/Name" />
-                        </form>
-                    </div>
-                    <div className="col-md-1"></div>
-                    <div className="col-md-4">
-                        <button className="btnAddSub"
-                            onClick={toggle}
-                        >Add New SubCategory</button>
-                    </div>
-                    <div className="col-md-4">
-                        <button className="btnAddSub"
-                            onClick={() => {
-                                history.push("/admin/newcake")
-                            }}
-                        >Add New Cake</button>
-                    </div>
-                </div>
+                <th></th>
             )
         }
     }
 
+    // Create SubCategories
     const urlCreateSubCategories = "http://192.168.1.250:5012/api/v1/subcategories/"
     const [dataCreateSubCategories, setDataCreateSubCategories] = useState({
         name: "",
@@ -111,6 +102,7 @@ function AllItems(props) {
         newdata[e.target.id] = e.target.value;
         setDataCreateSubCategories(newdata);
     }
+
     // Search By Name 
     const getSearch = async () => {
         const response = await axios
@@ -134,6 +126,7 @@ function AllItems(props) {
         getSearch();
     }
 
+    //Edit Item
     const [dataEdit, setDataEdit] = useState({
         id: "",
         name: "",
@@ -172,6 +165,7 @@ function AllItems(props) {
         if (!objectURL.url) return;
     }, [objectURL.post])
 
+    //showSub
     function showSub() {
         if (dataEdit.categoryName === "") {
             return
@@ -194,38 +188,34 @@ function AllItems(props) {
 
         }
     }
-    // function saveCake() {
-    //     if (objectURL.url === "") {
-    //         return (
-    //             <button disabled="disabled" type="button" className="btnAddSub"
-    //                 onClick={() => {
-    //                     saveCake()
-    //                 }}
-    //             >Save</button>
-    //         )
-    //     } else {
-    //         return (
-    //             <button type="button" className="btnAddSub"
-    //                 onClick={() => {
-    //                     saveCake()
-    //                     history.push("/admin/newcake", { src: objectURL.url })
-    //                 }}
-    //             >Save
-    //             </button>
-    //         )
-
-    //     }
-    // }
     return (
         <div className="col-10">
             <br />
-            {showbutton()}
+            <div className="row">
+                <div className="col-md-3">
+                    <form onSubmit={(e) => submitSearchName(e)}>
+                        <input onChange={(e) => Search(e)} id="nameSearch" type="text" placeholder="ID/Name" />
+                    </form>
+                </div>
+                <div className="col-md-1"></div>
+                <div className="col-md-4">
+                    <button className="btnAddSub"
+                        onClick={toggle}
+                    >Add New SubCategory</button>
+                </div>
+                <div className="col-md-4">
+                    <button className="btnAddSub"
+                        onClick={() => {
+                            history.push("/admin/newcake")
+                        }}
+                    >Add New Cake</button>
+                </div>
+            </div>
             <br />
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th></th>
-                        {/* <th>ID</th> */}
+                        {showbutton()}
                         <th>Name</th>
                         <th>Price</th>
                         <th>Category</th>
@@ -237,9 +227,26 @@ function AllItems(props) {
                     {
                         listCategoriesDetail.map((item) => {
                             return (
-                                <tr>
+                                <tr key={item.id}>
                                     <td>
-                                        <input id="checkbox" type="checkbox" name={item.name} />
+                                        <input type="checkbox"
+                                            onChange={() => {
+                                                let z = arrCheckBoxes.findIndex((icon) => icon === item.id);
+                                                if (z === -1) {
+                                                    return setArrCheckBoxes([item.id, ...arrCheckBoxes]);
+                                                } else {
+                                                    let newArr = [...arrCheckBoxes]
+                                                    let Arr = []
+                                                    newArr.map((icon) => {
+                                                        if (icon === item.id) {
+                                                        } else {
+                                                            Arr = [...Arr, icon]
+                                                        }
+                                                    })
+                                                    setArrCheckBoxes(Arr)
+                                                }
+                                            }}
+                                        />
                                     </td>
                                     {/* <td className="id">
                                         <label for={item.name}> {item.id}</label>
@@ -249,7 +256,7 @@ function AllItems(props) {
                                     <td>{item.category}</td>
                                     <td>{item.subcategory}</td>
                                     <td className="abc">
-                                        <button
+                                        {/* <button
                                             onClick={() => {
                                                 setDataEdit({
                                                     "id": item.id,
@@ -258,6 +265,12 @@ function AllItems(props) {
                                                     "categoryName": item.category
                                                 })
                                                 toggleEditItem();
+                                            }
+                                            }> <i className="fas fa-edit"></i>
+                                        </button> */}
+                                        <button
+                                            onClick={() => {
+                                                history.push("/admin/editcake/" + item.id)
                                             }
                                             }> <i className="fas fa-edit"></i>
                                         </button>
@@ -302,34 +315,6 @@ function AllItems(props) {
                     </form>
                 </ModalBody>
             </Modal>
-
-            {/* Add Cake */}
-            {/* <Modal isOpen={modalCake} toggle={toggleAddCake} className={modalAddCake}>
-                <ModalHeader toggle={toggleAddCake} charCode="X"></ModalHeader>
-                <ModalBody>
-                    <div className="row">
-                        <div className="col-12">
-                            <form onSubmit={(e) => submit(e)}>
-                                <div>
-                                    <h3>Select photo</h3>
-                                    <img className="imageCakeRecipes" src={objectURL.url} alt="Cake" width="150" height="150" />
-                                    <br />
-                                    <input type="file" className="custom" onChange={(e) => setObjectURL({
-                                        post: e.target.files[0],
-                                        url: URL.createObjectURL(e.target.files[0])
-                                    })}></input>
-                                </div>
-                                <br />
-                                {
-                                    saveCake()
-                                }
-                                <button type="button" onClick={toggleAddCake} className="btnAddSub">Cancel</button>
-                            </form>
-                        </div>
-                    </div>
-
-                </ModalBody>
-            </Modal> */}
 
             {/* EditItems */}
             <Modal isOpen={editItem} toggle={toggleEditItem} className={classNameEdit}>
