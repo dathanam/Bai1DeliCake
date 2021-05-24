@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './Style/DetailRecipe.css'
-import { axios } from '../component/axios'
-import Axios from 'axios'
-import { useHistory } from "react-router-dom";
+import './Style/DetailRecipe.css';
+import { axios } from '../component/axios';
 
 function DetailRecipe(props) {
     const [recipesDetail, setRecipesDetail] = useState([]);

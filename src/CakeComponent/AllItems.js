@@ -56,7 +56,7 @@ function AllItems(props) {
 
     // Show Button Delete
     let showbutton = () => {
-        if (arrCheckBoxes[0] != undefined) {
+        if (arrCheckBoxes[0] !== undefined) {
             return (
                 <th>
                     <i
