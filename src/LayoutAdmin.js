@@ -5,12 +5,12 @@ import Header from './CakeComponent/HeaderCake';
 import ListOrder from './CakeComponent/ListOrder';
 import Footer from './CakeComponent/Footer';
 import Item from './CakeComponent/Item';
-import EditItems from './CakeComponent/EditItems';
 import Recipes from './CakeComponent/Recipes';
 import NewRecipe from './CakeComponent/NewRecipe';
 import NewCake from './CakeComponent/NewCake';
 import DetailRecipe from './CakeComponent/DetailRecipe';
 import EditCake from './CakeComponent/EditCake';
+import EditRecipe from './CakeComponent/EditRecipe';
 
 function LayoutAdmin() {
     return (
@@ -21,12 +21,12 @@ function LayoutAdmin() {
                     <Switch>
                         <Route path="/admin" exact component={ListOrder} />
                         <Route path="/admin/items" component={Item} />
-                        <Route path="/admin/edititem/:id" component={EditItems} />
                         <Route path="/admin/recipes" component={Recipes} />
                         <Route path="/admin/newrecipe" component={NewRecipe} />
                         <Route path="/admin/newcake" component={NewCake} />
                         <Route path="/admin/detailRecipe/:id" component={DetailRecipe} />
                         <Route path="/admin/editcake/:id" component={EditCake} />
+                        <Route path="/admin/editrecipe/:id" component={EditRecipe} />
                     </Switch>
                     <Footer />
                 </Container>

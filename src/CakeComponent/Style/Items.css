@@ -144,3 +144,26 @@
 .ListOrderSub {
     margin-left: 20px;
 }
+.subCategory {
+    margin-left: 20px;
+}
+.dropright .dropdown-menu {
+    min-width: 20px;
+}
+.pointer {
+    cursor: pointer;
+}
+.subCategory {
+    cursor: pointer;
+}
+.ItemBody {
+    text-align: left;
+    margin-left: 30px;
+}
+.BodyItem {
+    margin-left: 20px;
+}
+.DetailItem img {
+    width: 100px;
+    height: 100px;
+}

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Container } from 'reactstrap';
 import './Style/Items.css'
-import { axios } from '../component/axios'
+import { axios } from '../axios'
 import AllItem from '../CakeComponent/AllItems'
+import { useHistory } from "react-router-dom";
 
 function Item() {
 
+    const history = useHistory();
     const [listCategory, setListCategory] = useState([]);
     const getArr = async () => {
         const response = await axios
@@ -24,7 +26,6 @@ function Item() {
         idcate: "",
         idsub: ""
     });
-
     return (
         <>
             <div className="itemss">
@@ -35,7 +36,7 @@ function Item() {
                                 listCategory.map((item) => {
                                     return (
                                         <>
-                                            <h5
+                                            <h5 className="pointer"
                                                 onClick={() => setName({
                                                     idcate: item.id
                                                 })}>
@@ -45,11 +46,29 @@ function Item() {
                                                 {
                                                     item.subcategory.map((icon) => {
                                                         return (
-                                                            <p onClick={() => setName({
-                                                                idsub: icon.id
-                                                            })}>
-                                                                {icon.name}
-                                                            </p>
+                                                            <div className="row">
+                                                                <div className="dropdown dropright">
+                                                                    <p className="subCategory" data-toggle="dropdown">
+                                                                        {icon.name}
+                                                                    </p>
+                                                                    <div className="dropdown-menu">
+                                                                        <p onClick={() => setName({
+                                                                            idsub: icon.id
+                                                                        })}>
+                                                                            <i className="fas fa-eye"></i>
+                                                                        </p>
+                                                                        <p onClick={() => {
+                                                                            axios.delete(`api/v1/subcategories/?_id=` + icon.id)
+                                                                                .then(res => {
+                                                                                    getArr();
+                                                                                })
+                                                                        }}>
+                                                                            <i className="far fa-trash-alt"></i>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
                                                         )
                                                     })
                                                 }

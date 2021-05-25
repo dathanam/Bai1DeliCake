@@ -1,10 +1,10 @@
 .detailRecipe {
     border: 2px double black;
 }
-.boderDetailRecipe{
+.boderDetailRecipe {
     margin: 30px 200px;
 }
-.imgDetail{
+.imgDetail {
     border: 1px double black;
 }
 .carousel-inner img {
@@ -22,13 +22,38 @@
 }
 .imgdetaill {
     border: none;
-}  
-.bodyDirections{
+}
+.bodyDirections {
     margin-left: 20px;
 }
-.detailRecipe i{
+.detailRecipe i {
     color: aqua;
 }
-.bodyIngredients{
+.bodyIngredients {
     margin-left: 30px;
+}
+.btnBack {
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: rgb(107, 115, 182);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px #999;
+    width: 100px;
+    margin-left: 5px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.btnBack:hover {
+    background-color: rgb(194, 171, 175);
+}
+
+.btnBack:active {
+    background-color: rgb(134, 122, 124);
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { axios } from '../component/axios'
+import { axios } from '../axios'
 import { Container } from 'reactstrap';
 import './Style/ListOrder.css';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
@@ -81,7 +81,6 @@ function List_Order(props) {
         convertStartToStamp: "",
         convertFinishToStamp: ""
     });
-    console.log(date)
 
     const getByDate = async () => {
         if (date.convertStartToStamp === "" || date.convertFinishToStamp === "") {
@@ -206,7 +205,7 @@ function List_Order(props) {
                     <thead>
                         <tr>
                             <th></th>
-                            <th>ID</th>
+                            {/* <th>ID</th> */}
                             <th>Total</th>
                             <th>Status</th>
                             <th>Phone Number</th>
@@ -229,9 +228,8 @@ function List_Order(props) {
                                             }>
                                                 <i class="far fa-eye"></i>
                                             </button></td>
-                                        <td>{item.id}</td>
+                                        {/* <td>{item.id}</td> */}
                                         <td>$ {item.total}</td>
-                                        <td>{item.user.phone_number}</td>
                                         <td>
                                             <select className="optionComfirm">
                                                 <option>{item.status}</option>

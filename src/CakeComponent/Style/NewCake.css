@@ -18,7 +18,7 @@
     width: auto;
 }
 .abc {
-    border-top: 1px double black;
+    /* border-top: 1px double black; */
     margin-top: 20px;
     padding: 0 40px;
 }
@@ -181,4 +181,15 @@
 }
 .ddd {
     border: 1px double black;
+}
+.btnDeleteImg {
+    color: rgb(233, 23, 23);
+    position: absolute;
+    top: 5px;
+    right: 20px;
+}
+i:active {
+    background-color: rgb(117, 90, 236);
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
 }

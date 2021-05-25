@@ -1,35 +1,44 @@
-.headerUser nav ul li{
+.headerUser nav ul li {
     display: flex;
-	align-items: center;
+    align-items: center;
     justify-content: center;
 }
-.headerUser nav ul li a{
+.headerUser nav ul li a {
     color: black;
 }
-.UserSearchCake{
+.UserSearchCake {
     margin-left: 50px;
 }
-.UserSearchCake input{
+.UserSearchCake input {
     width: 100px;
     border-radius: 10px;
 }
-.UserSearchCake button{
+.UserSearchCake button {
     border: none;
 }
-.userCart{
+.userCart {
     margin-left: 20px;
 }
-.numberNav{
+.numberNav {
     color: red;
     font-weight: bold;
 }
-.dropdown-menu{
+.menuDropdow {
     width: 700px;
     font-weight: bold;
 }
-.categoryBody{
+.categoryBody {
     font-weight: normal;
 }
-.UserSub{
+.UserSub {
     margin-left: 20px;
+}
+.categoryBody {
+    cursor: pointer;
+}
+.categoryHead:hover {
+    text-decoration: underline;
+}
+.subcategoryHead:hover {
+    text-decoration: underline;
 }

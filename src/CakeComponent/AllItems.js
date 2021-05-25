@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { axios } from '../component/axios'
+import { axios } from '../axios'
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import Axios from 'axios';
 import { useHistory } from "react-router-dom";
@@ -7,10 +7,31 @@ import { useHistory } from "react-router-dom";
 function AllItems(props) {
     const listcategory = props.listCategory
     const [listCategoriesDetail, setlistCategoriesDetail] = useState([]);
+    const [itemDetail, setItemDetail] = useState({
+        images_items: []
+    });
     const [inputName, setInputName] = useState({
         nameSearch: ""
     })
     const history = useHistory();
+
+
+    const [id, setID] = useState({
+        id: ""
+    });
+    //Get Items by ID
+    const getItemDetail = async () => {
+        const response = await axios
+            .get(`/api/v1/items/` + id.id)
+            .catch((err) => console.log("Error: ", err));
+
+        if (response && response.data) {
+            setItemDetail(response.data.data[0])
+        }
+    }
+    useEffect(() => {
+        getItemDetail();
+    }, [id.id]);
 
     // Delete Many
     const [arrCheckBoxes, setArrCheckBoxes] = useState([])
@@ -188,6 +209,13 @@ function AllItems(props) {
 
         }
     }
+
+    const {
+        classItemDetail
+    } = props;
+    const [DataItemDetail, setDataItemDetail] = useState(false);
+    const toggleDetailItem = () => setDataItemDetail(!DataItemDetail);
+
     return (
         <div className="col-10">
             <br />
@@ -268,6 +296,14 @@ function AllItems(props) {
                                             }
                                             }> <i className="fas fa-edit"></i>
                                         </button> */}
+                                        <button onClick={() => {
+                                            setID({
+                                                id: item.id
+                                            })
+                                            toggleDetailItem()
+                                        }}>
+                                            <i class="fas fa-eye"></i>
+                                        </button>
                                         <button
                                             onClick={() => {
                                                 history.push("/admin/editcake/" + item.id)
@@ -336,6 +372,62 @@ function AllItems(props) {
                         <button className="btnAddSub">Save</button>
                         <button type="button" onClick={toggleEditItem} className="btnAddSub1">Cancel</button>
                     </form>
+                </ModalBody>
+            </Modal>
+
+            {/* Detail Item */}
+            <Modal isOpen={DataItemDetail} toggle={toggleDetailItem} className={classItemDetail}>
+                <ModalHeader toggle={toggleDetailItem} charCode="X"></ModalHeader>
+                <ModalBody>
+
+
+
+                    <div className="DetailItem">
+                        <div className="ItemBody">
+                            <div className="row">
+                                <div className="col-12">
+                                    <h2 className="LabelNameInput">Name: {itemDetail.name}</h2>
+                                    <div className="BodyItem">
+                                        <h5 className="LabelNameInput">Size: {itemDetail.size}</h5>
+                                        <h5 className="LabelNameInput">Price: ${itemDetail.price}</h5>
+                                        <h5 className="LabelNameInput">Category: {itemDetail.category}</h5>
+                                        <h5 className="LabelNameInput">Subcategory: {itemDetail.subcategory}</h5>
+                                        <br />
+                                        <h5>Product Detail: </h5>
+                                        <p>{itemDetail.product_detail}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-12">
+                                <div className="ImgNewCake">
+                                    <div className="rowNewCake">
+                                        <div className="row">
+                                            {
+                                                itemDetail.images_items.map((item) => {
+                                                    return (
+                                                        <div className="col-md-6" key={item.url}>
+                                                            <img className="img-fluid" src={item.name} alt="logo" />
+                                                        </div>
+                                                    )
+                                                })
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <br />
+                        <div className="btnCake">
+                            <button onClick={toggleDetailItem} type="button" className="btnAddCakeCancel">Cancel</button>
+                        </div>
+
+                    </div>
+
+
+
                 </ModalBody>
             </Modal>
 

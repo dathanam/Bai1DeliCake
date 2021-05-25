@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './Style/DetailRecipe.css';
-import { axios } from '../component/axios';
+import { axios } from '../axios'
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
+import { useHistory } from "react-router-dom";
 
 function DetailRecipe(props) {
+    const history = useHistory();
     const [recipesDetail, setRecipesDetail] = useState([]);
-    console.log(recipesDetail)
     const getArr = async () => {
         const response = await axios
             .get(`api/v1/recipes/` + props.match.params.id)
@@ -37,13 +40,14 @@ function DetailRecipe(props) {
                                                     <li data-target="#demo" data-slide-to="1"></li>
                                                     <li data-target="#demo" data-slide-to="2"></li>
                                                 </ul>
+
+
                                                 <div className="carousel-inner">
                                                     {
                                                         item.images_recipes.map((icon) => {
-                                                            console.log(icon)
                                                             return (
                                                                 <div className="carousel-item active">
-                                                                    <img className="img-fluid" src={icon.name} alt="logo" />
+                                                                    <img className="img-fluid" src={icon.name} alt="cake" />
                                                                 </div>
                                                             )
                                                         })
@@ -60,18 +64,15 @@ function DetailRecipe(props) {
                                             </div>
                                         </div>
                                         <div className="row abcd">
-                                            <div className="col-3 imgdetaill">
-                                                <img className="img-fluid" src="https://th.bing.com/th/id/Rf9d392d758a9039d082850eded33ec79?rik=seEtV8YA5vY9sA&pid=ImgRaw" alt="logo" />
-                                            </div>
-                                            <div className="col-3 imgdetaill">
-                                                <img className="img-fluid" src="https://th.bing.com/th/id/Rf9d392d758a9039d082850eded33ec79?rik=seEtV8YA5vY9sA&pid=ImgRaw" alt="logo" />
-                                            </div>
-                                            <div className="col-3 imgdetaill">
-                                                <img className="img-fluid" src="https://th.bing.com/th/id/Rf9d392d758a9039d082850eded33ec79?rik=seEtV8YA5vY9sA&pid=ImgRaw" alt="logo" />
-                                            </div>
-                                            <div className="col-3 imgdetaill">
-                                                <img className="img-fluid" src="https://th.bing.com/th/id/Rf9d392d758a9039d082850eded33ec79?rik=seEtV8YA5vY9sA&pid=ImgRaw" alt="logo" />
-                                            </div>
+                                            {
+                                                item.images_recipes.map((icon) => {
+                                                    return (
+                                                        <div className="col-3 imgdetaill">
+                                                            <img className="img-fluid" src={icon.name} alt="logo" />
+                                                        </div>
+                                                    )
+                                                })
+                                            }
                                         </div>
                                     </div>
                                     <div className="col-4">
@@ -103,6 +104,13 @@ function DetailRecipe(props) {
 
                                         </div>
                                     </div>
+                                </div>
+                                <div className="row">
+                                    <button type="button" className="btnBack"
+                                        onClick={() => {
+                                            history.push("/admin/recipes")
+                                        }}
+                                    >Back</button>
                                 </div>
                             </>
                         )

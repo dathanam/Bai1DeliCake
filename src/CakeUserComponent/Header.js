@@ -1,8 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../CakeComponent/Style/User/Header.css'
 import { Link } from "react-router-dom";
+import { axios } from '../axios'
 
 function Header() {
+
+    // get list sub and category
+    const [subAndCatesory, setSubAndCatesory] = useState([]);
+    const getSubAndCatesory = async () => {
+        const response = await axios
+            .get("api/v1/categories")
+            .catch((err) => console.log("Error: ", err));
+
+        if (response && response.data) {
+            setSubAndCatesory(response.data.data);
+        }
+    }
+    useEffect(() => {
+        getSubAndCatesory();
+    }, []);
 
     return (
         <div className="headerUser">
@@ -18,45 +34,26 @@ function Header() {
                         <a className="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
                             Category
                         </a>
-                        <div className="dropdown-menu ">
+                        <div className="dropdown-menu menuDropdow">
                             <div className="row categoryBody">
-                                <div className="col-md-3">
-                                    <h6>BirthDay Cake</h6>
-                                    <div className="UserSub">
-                                        <p>Hello</p>
-                                        <p>Hello</p>
-                                        <p>Hello</p>
-                                        <p>Hello</p>
-                                    </div>
-                                </div>
-                                <div className="col-md-3">
-                                    <h6>BirthDay Cake</h6>
-                                    <div className="UserSub">
-                                        <p>Hello</p>
-                                        <p>Hello</p>
-                                        <p>Hello</p>
-                                        <p>Hello</p>
-                                    </div>
-                                </div>
-                                <div className="col-md-3">
-                                    <h6>BirthDay Cake</h6>
-                                    <div className="UserSub">
-                                        <p>Hello</p>
-                                        <p>Hello</p>
-                                        <p>Hello</p>
-                                        <p>Hello</p>
-                                    </div>
-                                </div>
-                                <div className="col-md-3">
-                                    <h6>BirthDay Cake</h6>
-                                    <div className="UserSub">
-                                        <p>Hello</p>
-                                        <p>Hello</p>
-                                        <p>Hello</p>
-                                        <p>Hello</p>
-                                    </div>
-                                </div>
-
+                                {
+                                    subAndCatesory.map((item) => {
+                                        return (
+                                            <div className="col-md-3 " key={item.id}>
+                                                <h5 className="categoryHead">{item.name}</h5>
+                                                <div className="UserSub">
+                                                    {
+                                                        item.subcategory.map((icon) => {
+                                                            return (
+                                                                <p className="subcategoryHead" key={icon.id}>{icon.name}</p>
+                                                            )
+                                                        })
+                                                    }
+                                                </div>
+                                            </div>
+                                        )
+                                    })
+                                }
                             </div>
                         </div>
                     </li>

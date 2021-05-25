@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../CakeComponent/Style/User/Home.css'
 import OwlCarousel from "react-owl-carousel";
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
+import { axios } from '../axios'
 
 function Home() {
+
+    // get list sub and category
+    const [subAndCatesory, setSubAndCatesory] = useState([]);
+    const getSubAndCatesory = async () => {
+        const response = await axios
+            .get("api/v1/categories")
+            .catch((err) => console.log("Error: ", err));
+
+        if (response && response.data) {
+            setSubAndCatesory(response.data.data);
+        }
+    }
+    useEffect(() => {
+        getSubAndCatesory();
+    }, []);
 
     return (
         <div className="userHome">
@@ -43,28 +59,27 @@ function Home() {
             </div>
             <br />
             <div className="row homeBody">
-                <div className="col-md-3">
-                    <div className="homeCategory">
-                        <h5>BirthDayCake</h5>
-                        <div className="homeSub">
-                            <p>hello</p>
-                            <p>hello</p>
-                            <p>hello</p>
-                            <p>hello</p>
-                        </div>
-                    </div>
-                    <div className="homeCategory">
-                        <h5>BirthDayCake</h5>
-                        <div className="homeSub">
-                            <p>hello</p>
-                            <p>hello</p>
-                            <p>hello</p>
-                            <p>hello</p>
-                        </div>
-                    </div>
-
+                <div className="col-md-2">
+                    {
+                        subAndCatesory.map((item) => {
+                            return (
+                                <div className="homeCategory">
+                                    <h5>BirthDayCake</h5>
+                                    <div className="homeSub">
+                                        {
+                                            item.subcategory.map((icon) => {
+                                                return (
+                                                    <p className="subcategoryHead" key={icon.id}>{icon.name}</p>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
-                <div className="col-md-9">
+                <div className="col-md-10">
                     <div className="rowMenu">
                         <h5>Best Seller</h5>
                         <OwlCarousel className="owl-theme" loop margin={10} nav>
@@ -73,7 +88,7 @@ function Home() {
                                 <p className="pictrue-title">TenMon</p>
                                 <p className="pictrue-money">DonGia<u>đ</u></p>
                                 <button type="button" class="btn btn-outline-warning btn-sm">Add To Cart <i class="fas fa-cart-plus"></i></button>
-                            </div>                   
+                            </div>
                         </OwlCarousel>
                     </div>
                     <br />
@@ -85,7 +100,7 @@ function Home() {
                                 <p className="pictrue-title">TenMon</p>
                                 <p className="pictrue-money">DonGia<u>đ</u></p>
                                 <button type="button" class="btn btn-outline-warning btn-sm">Add To Cart <i class="fas fa-cart-plus"></i></button>
-                            </div>                   
+                            </div>
                         </OwlCarousel>
                     </div>
                 </div>

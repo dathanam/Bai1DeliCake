@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './Style/Recipes.css'
-import { axios } from '../component/axios'
+import { axios } from '../axios'
 import { useHistory } from "react-router-dom";
-import DetailRecipe from '../CakeComponent/DetailRecipe'
 import moment from 'moment'
 
 function Recipes() {
     const history = useHistory();
     const [listRecipes, setListRecipes] = useState([]);
-    console.log(listRecipes.publish_at)
     const [inputName, setInputName] = useState({
         nameSearch: ""
     })
@@ -209,17 +207,18 @@ function Recipes() {
                                                 }}>
                                                     <i class="fas fa-eye"></i>
                                                 </button>
-                                                <button>
+                                                <button onClick={() => {
+                                                    history.push("/admin/editrecipe/" + item.id)
+                                                }}>
                                                     <i className="fas fa-edit"></i>
                                                 </button>
                                                 <button
                                                     onClick={() => {
-                                                        axios.delete(`api/v1/recipes/?id=` + item.id)
+                                                        axios.delete(`api/v1/recipes/?ids=` + item.id)
                                                             .then(res => {
                                                                 getRecipes();
                                                             })
-                                                    }
-                                                    }>
+                                                    }}>
                                                     <i class="far fa-trash-alt"></i>
                                                 </button>
                                             </td>

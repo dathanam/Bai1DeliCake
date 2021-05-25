@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Style/NewCake.css';
 import Axios from 'axios';
 import { useHistory } from "react-router-dom";
-import { axios } from '../component/axios'
+import { axios } from '../axios'
 
 function NewCake(props) {
     const [listCategory, setListCategory] = useState([]);
@@ -54,7 +54,7 @@ function NewCake(props) {
         newdata[e.target.id] = e.target.value;
         setDataCreateItem(newdata);
     }
-    function disAbled() {
+    function disabled() {
         if (objectURL.length === 4) {
             return (
                 <input disabled="disabled" type="file" className="custom" onChange={(e) => setObjectURL([...objectURL, {
@@ -90,7 +90,7 @@ function NewCake(props) {
                     <div className="col-7">
                         <div className="row btnInputImg">
                             <div className="col-12">
-                                {disAbled()}
+                                {disabled()}
                             </div>
                         </div>
                         <div className="ImgNewCake">
@@ -163,7 +163,11 @@ function NewCake(props) {
                             <br />
                             <div className="btnCake">
                                 {ShowSave()}
-                                <button type="button" className="btnAddCakeCancel">Cancel</button>
+                                <button type="button" className="btnAddCakeCancel"
+                                    onClick={() => {
+                                        history.push("/admin/items")
+                                    }}
+                                >Cancel</button>
                             </div>
                         </div>
                     </div>

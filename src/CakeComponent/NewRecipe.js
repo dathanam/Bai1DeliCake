@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './Style/NewRecipe.css'
-import { axios } from '../component/axios'
+import { axios } from '../axios'
 import Axios from 'axios'
 import { useHistory } from "react-router-dom";
 
 function NewRecipe() {
     const history = useHistory();
-    const [objectURL, setObjectURL] = useState({
-        url: "",
-        post: ""
-    });
+    const [objectURL, setObjectURL] = useState([]);
     useEffect(() => {
         if (!objectURL.url) return;
     }, [objectURL.post])
@@ -45,7 +42,9 @@ function NewRecipe() {
         formdata.append("ingredient", dataCreateRecipe.ingredient);
         formdata.append("direction", dataCreateRecipe.direction);
         formdata.append("publish_at", parseInt((new Date(dataCreateRecipe.publish_at).getTime() / 1000).toFixed(0)));
-        formdata.append("images", objectURL.post, "3.jpg");
+        objectURL.map((item) => {
+            formdata.append("images", item.post, "3.jpg");
+        })
 
         Axios.post(urlCreateRecipe, formdata).then((res) => {
             if (res.statusText === "OK") {
@@ -58,6 +57,23 @@ function NewRecipe() {
         const newdata = { ...dataCreateRecipe };
         newdata[e.target.id] = e.target.value;
         setDataCreateRecipe(newdata);
+    }
+    function disabled() {
+        if (objectURL.length === 4) {
+            return (
+                <input disabled="disabled" type="file" className="custom" onChange={(e) => setObjectURL([...objectURL, {
+                    post: e.target.files[0],
+                    url: URL.createObjectURL(e.target.files[0]),
+                }])}></input>
+            )
+        } else {
+            return (
+                <input type="file" className="custom" onChange={(e) => setObjectURL([...objectURL, {
+                    post: e.target.files[0],
+                    url: URL.createObjectURL(e.target.files[0]),
+                }])}></input>
+            )
+        }
     }
 
     return (
@@ -75,7 +91,7 @@ function NewRecipe() {
                             </select>
                         </div>
                         <div className="col-6">
-                            <h3>Public at</h3>
+                            <h3>Publish at</h3>
                             <input
                                 type="date"
                                 name="publish_at"
@@ -93,13 +109,18 @@ function NewRecipe() {
                     <br />
                     <div>
                         <h3>Image</h3>
-                        <input type="file" className="custom" onChange={(e) => setObjectURL({
-                            post: e.target.files[0],
-                            url: URL.createObjectURL(e.target.files[0])
-                        })}
-                            id="image"
-                        ></input>
-                        <img className="imageCakeRecipes" src={objectURL.url} alt="Cake" width="150" height="150" />
+                        {disabled()}
+                        <div className="row">
+                            {
+                                objectURL.map((item) => {
+                                    return (
+                                        <div className="col-md-3" key={item.url}>
+                                            <img className="img-fluid" src={item.url} alt="Cake" width="150" height="150" />
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
 
                     </div>
                     <br />
@@ -119,7 +140,7 @@ function NewRecipe() {
                         <button className="btnSave">Save</button>
                         <button type="button" className="btnCancel"
                             onClick={() => {
-                                history.push("/admin/items")
+                                history.push("/admin/recipes")
                             }}
                         >Cancel</button>
                     </div>
